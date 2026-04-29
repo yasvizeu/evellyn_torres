@@ -20,7 +20,7 @@ const WEEKS = [
     // Com arquivo:   { label: "Nome", url: "audios/arquivo.mp3" }
     // Pelo WhatsApp: { label: "Nome — enviado pelo WhatsApp", url: "" }
     audios: [
-      { label: "Pronúncia de 'th' — enviado pelo WhatsApp", url: "" }
+      { label: "", url: "" }
     ],
 
     links: [
@@ -43,18 +43,18 @@ const WEEKS = [
 
   {
     number: 2,
-    title: "Daily Routines",
-    focus: "Praticar frases simples sobre rotina e começar a falar pequenas informações do dia a dia.",
+    title: "Questions using To Be",
+    focus: "Praticar estruturas gramaticais interrogativas com ser/estar.",
 
     pdfs: [],
 
     exercises: [
-      "Complete os exercícios da Semana 2 no caderno",
+      "Escreva 4 perguntas com To Be",
       "Grave um áudio curto falando 3 frases sobre sua rotina"
     ],
 
     audios: [
-      { label: "Modelo de rotina — enviado pelo WhatsApp", url: "" }
+      { label: "", url: "" }
     ],
 
     links: [],
