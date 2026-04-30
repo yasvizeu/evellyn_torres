@@ -2,7 +2,8 @@
 // ✏️ DAILY CONTENT — atualize aqui sempre que quiser
 // ============================================================
 
-const PLAN = "Fluency";
+// ✏️ Troque o plano no index.html em: <body data-plan="Foundation">
+var PLAN = document.body.getAttribute("data-plan") || "Foundation";
 
 const DAILY = {
   date: "30 de abril, 2026",
@@ -200,7 +201,7 @@ const WEEKS = [
     ],
     vocabulary: [
       { word: "can",   translation: "poder / conseguir",        phonetic: "/kan/" },
-      { word: "can't", translation: "não poder / não conseguir", phonetic: "/kant/" },
+      { word: "can't", translation: "nao poder / nao conseguir", phonetic: "/kant/" },
       { word: "speak", translation: "falar",                    phonetic: "/spik/" },
       { word: "see",   translation: "ver",                      phonetic: "/si/" },
       { word: "watch", translation: "assistir",                 phonetic: "/wotch/" },
