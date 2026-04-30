@@ -573,3 +573,227 @@ main {
   color: var(--plum);
   font-weight: 400;
 }
+
+/* ── DAILY CONTENT BUTTON ── */
+.daily-btn-wrap {
+  max-width: 860px;
+  margin: 32px auto 0;
+}
+
+.daily-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+  background: linear-gradient(135deg, #FFF8EC, #FFF3DC);
+  border: 1.5px solid var(--amber-soft);
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-align: left;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+  box-shadow: 0 2px 12px rgba(200,136,58,.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.daily-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(200,136,58,.06), transparent);
+  pointer-events: none;
+}
+
+.daily-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(200,136,58,.18);
+  border-color: var(--amber);
+}
+
+.daily-btn-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.daily-btn-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.daily-btn-text strong {
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--plum);
+  font-family: 'Playfair Display', serif;
+}
+
+.daily-btn-text span {
+  font-size: .78rem;
+  color: var(--muted);
+}
+
+.daily-btn-arrow {
+  color: var(--amber);
+  font-size: 1.1rem;
+  font-weight: 600;
+  flex-shrink: 0;
+  transition: transform .2s;
+}
+
+.daily-btn:hover .daily-btn-arrow {
+  transform: translateX(4px);
+}
+
+/* ── DAILY ASIDE ── */
+.daily-aside { background:
+  radial-gradient(ellipse at 100% 0%, rgba(200,136,58,.2), transparent 50%),
+  linear-gradient(155deg, #1A0800, #2D1000) !important;
+}
+
+/* ── DAILY LOCKED ── */
+.daily-locked {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 24px;
+  gap: 12px;
+}
+
+.daily-lock-icon { font-size: 2.5rem; }
+
+.daily-locked h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: var(--plum);
+}
+
+.daily-locked p {
+  font-size: .9rem;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 300px;
+}
+
+.daily-locked strong { color: var(--amber); }
+
+/* ── DAILY TEXT ── */
+.daily-text-wrap { margin-bottom: 4px; }
+
+.daily-text {
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--amber);
+  border-radius: 0 10px 10px 0;
+  padding: 16px 18px;
+  font-size: .92rem;
+  line-height: 1.75;
+  color: var(--text);
+}
+
+/* ── DAILY QUESTIONS ── */
+.daily-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.daily-q-text {
+  font-size: .9rem;
+  color: var(--text);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.daily-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.daily-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  font-size: .88rem;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  transition: background .15s, border-color .15s;
+  width: 100%;
+}
+
+.daily-opt:hover:not(:disabled) {
+  background: var(--plum-light);
+  border-color: var(--plum-mid);
+}
+
+.daily-opt:disabled { cursor: default; }
+
+.opt-letter {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--plum);
+  flex-shrink: 0;
+}
+
+.daily-opt.correct {
+  background: #EAF7F1;
+  border-color: #2D7158;
+}
+.daily-opt.correct .opt-letter {
+  background: #2D7158;
+  border-color: #2D7158;
+  color: #fff;
+}
+
+.daily-opt.wrong {
+  background: #FDEBEB;
+  border-color: #9D2828;
+}
+.daily-opt.wrong .opt-letter {
+  background: #9D2828;
+  border-color: #9D2828;
+  color: #fff;
+}
+
+.daily-feedback {
+  font-size: .8rem;
+  margin-top: 6px;
+  font-weight: 500;
+}
+.feedback-correct { color: #2D7158; }
+.feedback-wrong   { color: #9D2828; }
+
+.daily-reset-btn {
+  margin-top: 28px;
+  padding: 10px 20px;
+  background: none;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color .15s, color .15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.daily-reset-btn:hover {
+  border-color: var(--amber);
+  color: var(--amber);
+}
