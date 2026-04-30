@@ -537,30 +537,37 @@ function renderVocabulary(vocabulary) {
 function renderClasswork(classwork) {
   const sections = (classwork || []).filter(s => s.title);
   if (!sections.length) return '';
-  return sections.map(section => `
-    <div class="resource-section">
-      <h3 class="res-title">${section.title}</h3>
-      <p class="classwork-instruction">${section.instruction}</p>
-      <div class="classwork-list">
-        ${section.items.map((item, i) => `
-          <div class="classwork-item" id="cw-${section.title.replace(/\s/g,'')}-${i}">
-            <p class="classwork-q"><strong>${i + 1}.</strong> ${item.question}</p>
-            <button class="classwork-reveal-btn"
-              onclick="revealAnswer(this, '${item.answer.replace(/'/g, "\'")}')">
-              Ver resposta
-            </button>
-            <p class="classwork-answer" style="display:none">${item.answer}</p>
-          </div>`).join('')}
-      </div>
-    </div>`).join('');
+
+  // Store answers in a global map to avoid inline quote escaping issues
+  window._cwAnswers = window._cwAnswers || {};
+
+  return sections.map((section, si) => {
+    return '<div class="resource-section">'
+      + '<h3 class="res-title">' + section.title + '</h3>'
+      + '<p class="classwork-instruction">' + section.instruction + '</p>'
+      + '<div class="classwork-list">'
+      + section.items.map((item, i) => {
+          const key = 'cw_' + si + '_' + i;
+          window._cwAnswers[key] = item.answer;
+          return '<div class="classwork-item">'
+            + '<p class="classwork-q"><strong>' + (i + 1) + '.</strong> ' + item.question + '</p>'
+            + '<button class="classwork-reveal-btn" onclick="revealAnswer(this, '' + key + '')">'
+            + 'Ver resposta</button>'
+            + '<p class="classwork-answer" style="display:none"></p>'
+            + '</div>';
+        }).join('')
+      + '</div></div>';
+  }).join('');
 }
 
-function revealAnswer(btn, answer) {
+function revealAnswer(btn, key) {
   const item = btn.parentElement;
   const answerEl = item.querySelector('.classwork-answer');
+  answerEl.textContent = window._cwAnswers[key] || '';
   answerEl.style.display = 'block';
   btn.style.display = 'none';
 }
+
 
 function renderGlossary() {
   const section = document.getElementById("glossarySection");
