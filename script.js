@@ -200,7 +200,7 @@ const WEEKS = [
     ],
     vocabulary: [
       { word: "can",   translation: "poder / conseguir",        phonetic: "/kan/" },
-      { word: "can't", translation: "nao poder / nao conseguir", phonetic: "/kant/" },
+      { word: "can't", translation: "não poder / não conseguir", phonetic: "/kant/" },
       { word: "speak", translation: "falar",                    phonetic: "/spik/" },
       { word: "see",   translation: "ver",                      phonetic: "/si/" },
       { word: "watch", translation: "assistir",                 phonetic: "/wotch/" },
