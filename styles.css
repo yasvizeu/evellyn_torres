@@ -452,7 +452,7 @@ main {
   gap: 10px;
 }
 .vocab-card {
-  height: 90px;
+  height: 100px;
   cursor: pointer;
   perspective: 600px;
   -webkit-perspective: 600px;
@@ -474,7 +474,12 @@ main {
   transition: transform .42s cubic-bezier(.4,0,.2,1);
   text-align: center;
 }
-.vocab-front { background: var(--paper); transform: rotateY(0deg); }
+.vocab-front {
+  background: var(--paper);
+  transform: rotateY(0deg);
+  justify-content: flex-start;
+  padding-top: 6px;
+}
 .vocab-back  { background: var(--plum); border-color: var(--plum); transform: rotateY(180deg); }
 .vocab-card.flipped .vocab-front { transform: rotateY(-180deg); }
 .vocab-card.flipped .vocab-back  { transform: rotateY(0deg); }
@@ -499,10 +504,12 @@ main {
   color: var(--amber-soft); line-height: 1.3;
 }
 .vocab-speak-btn {
-  position: absolute; top: 6px; right: 6px;
+  position: static;
   background: none; border: none; cursor: pointer;
-  font-size: .8rem; padding: 2px 4px; border-radius: 4px;
+  font-size: .85rem; padding: 3px 6px; border-radius: 6px;
   color: var(--muted); transition: color .15s, background .15s; line-height: 1;
+  margin-bottom: 2px;
+  align-self: flex-end;
 }
 .vocab-speak-btn:hover { color: var(--amber); background: #FFF8EC; }
 .vocab-speak-btn.speaking {
@@ -577,74 +584,105 @@ main {
 /* ── DAILY CONTENT BUTTON ── */
 .daily-btn-wrap {
   max-width: 860px;
-  margin: 32px auto 0;
+  margin: 0 auto 40px;
 }
 
 .daily-btn {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 18px 22px;
-  background: linear-gradient(135deg, #FFF8EC, #FFF3DC);
-  border: 1.5px solid var(--amber-soft);
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px 28px;
+  background:
+    radial-gradient(ellipse at 0% 50%, rgba(200,136,58,.12), transparent 60%),
+    linear-gradient(135deg, var(--plum), var(--plum-mid));
+  border: none;
   border-radius: var(--radius);
   cursor: pointer;
   text-align: left;
-  transition: transform .2s, box-shadow .2s, border-color .2s;
-  box-shadow: 0 2px 12px rgba(200,136,58,.1);
+  transition: transform .22s ease, box-shadow .22s ease;
+  box-shadow: 0 4px 24px rgba(61,38,69,.18);
   position: relative;
   overflow: hidden;
 }
 
-.daily-btn::before {
+.daily-btn::after {
   content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(200,136,58,.06), transparent);
+  right: -40px;
+  top: -40px;
+  width: 130px;
+  height: 130px;
+  border: 1.5px solid rgba(240,200,122,.12);
+  border-radius: 50%;
   pointer-events: none;
 }
 
 .daily-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(200,136,58,.18);
-  border-color: var(--amber);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px rgba(61,38,69,.28);
 }
 
-.daily-btn-icon {
-  font-size: 1.5rem;
-  flex-shrink: 0;
-}
-
-.daily-btn-text {
-  flex: 1;
+.daily-btn-left {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 5px;
 }
 
-.daily-btn-text strong {
-  font-size: .95rem;
-  font-weight: 600;
-  color: var(--plum);
+.daily-tag {
+  font-size: .68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .22em;
+  color: var(--amber-soft);
+  display: block;
+}
+
+.daily-btn-title {
   font-family: 'Playfair Display', serif;
-}
-
-.daily-btn-text span {
-  font-size: .78rem;
-  color: var(--muted);
-}
-
-.daily-btn-arrow {
-  color: var(--amber);
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 600;
-  flex-shrink: 0;
-  transition: transform .2s;
+  color: #fff;
+  line-height: 1.2;
 }
 
-.daily-btn:hover .daily-btn-arrow {
-  transform: translateX(4px);
+.daily-btn-sub {
+  font-size: .76rem;
+  color: rgba(255,255,255,.5);
+  font-weight: 300;
+}
+
+.daily-btn-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.daily-pin {
+  font-size: 1.6rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.2));
+}
+
+.daily-btn-cta {
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--amber-soft);
+  white-space: nowrap;
+  transition: letter-spacing .2s;
+}
+
+.daily-btn:hover .daily-btn-cta {
+  letter-spacing: .04em;
+}
+
+@media (min-width: 540px) {
+  .daily-btn { padding: 28px 32px; }
+  .daily-btn-title { font-size: 1.45rem; }
+  .daily-pin { font-size: 2rem; }
 }
 
 /* ── DAILY ASIDE ── */
