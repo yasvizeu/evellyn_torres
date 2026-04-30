@@ -2,18 +2,11 @@
 // ✏️ DAILY CONTENT — atualize aqui sempre que quiser
 // ============================================================
 
-const PLAN = "Foundation"; // ✏️ Troque para "Fluency" para liberar o conteúdo
+const PLAN = "Foundation";
 
 const DAILY = {
-  date: "30 de abril, 2026",   // ✏️ Data de hoje
-
-  // ✏️ TEXTO — pode ser um parágrafo curto, diálogo, notícia, etc.
-  text: `Sarah and Tom are at a coffee shop. Sarah is a teacher and Tom is her student.
-Tom is nervous, but Sarah is very kind. "Are you okay?" she asks.
-"I am fine, thank you! I am just a little tired," Tom says.
-"That's okay. We are here to learn, not to be perfect!" Sarah smiles.`,
-
-  // ✏️ 5 PERGUNTAS DE MÚLTIPLA ESCOLHA (a, b, c, d, e)
+  date: "30 de abril, 2026",
+  text: "Sarah and Tom are at a coffee shop. Sarah is a teacher and Tom is her student. Tom is nervous, but Sarah is very kind. Are you okay? she asks. I am fine, thank you! I am just a little tired, Tom says. That is okay. We are here to learn, not to be perfect! Sarah smiles.",
   questions: [
     {
       question: "Where are Sarah and Tom?",
@@ -22,7 +15,7 @@ Tom is nervous, but Sarah is very kind. "Are you okay?" she asks.
         { letter: "b", text: "At a coffee shop" },
         { letter: "c", text: "At home" },
         { letter: "d", text: "At work" },
-        { letter: "e", text: "At the park" },
+        { letter: "e", text: "At the park" }
       ],
       answer: "b"
     },
@@ -33,7 +26,7 @@ Tom is nervous, but Sarah is very kind. "Are you okay?" she asks.
         { letter: "b", text: "She is a student" },
         { letter: "c", text: "She is a teacher" },
         { letter: "d", text: "She is a nurse" },
-        { letter: "e", text: "She is a chef" },
+        { letter: "e", text: "She is a chef" }
       ],
       answer: "c"
     },
@@ -44,7 +37,7 @@ Tom is nervous, but Sarah is very kind. "Are you okay?" she asks.
         { letter: "b", text: "He is angry" },
         { letter: "c", text: "He is nervous" },
         { letter: "d", text: "He is sad" },
-        { letter: "e", text: "He is excited" },
+        { letter: "e", text: "He is excited" }
       ],
       answer: "c"
     },
@@ -55,7 +48,7 @@ Tom is nervous, but Sarah is very kind. "Are you okay?" she asks.
         { letter: "b", text: "Are you okay?" },
         { letter: "c", text: "Are you a teacher?" },
         { letter: "d", text: "Are you hungry?" },
-        { letter: "e", text: "Are you ready?" },
+        { letter: "e", text: "Are you ready?" }
       ],
       answer: "b"
     },
@@ -66,162 +59,73 @@ Tom is nervous, but Sarah is very kind. "Are you okay?" she asks.
         { letter: "b", text: "We are here to be tired" },
         { letter: "c", text: "We are here to work" },
         { letter: "d", text: "We are here to learn, not to be perfect" },
-        { letter: "e", text: "We are here to drink coffee" },
+        { letter: "e", text: "We are here to drink coffee" }
       ],
       answer: "d"
-    },
+    }
   ]
 };
 
 // ============================================================
-// ⬇️ FUNÇÕES DO DAILY CONTENT — não mexa
-// ============================================================
-
-function openDaily() {
-  const overlay = document.getElementById("dailyOverlay");
-  const body    = document.getElementById("dailyBody");
-  const dateEl  = document.getElementById("dailyDate");
-
-  dateEl.textContent = DAILY.date || "";
-
-  if (PLAN !== "Fluency") {
-    body.innerHTML = `
-      <div class="daily-locked">
-        <span class="daily-lock-icon">🔒</span>
-        <h3>Conteúdo Fluency</h3>
-        <p>O Daily Content é exclusivo para alunas do plano <strong>Fluency</strong>.</p>
-        <p>Fale com a Yas para fazer o upgrade e ter acesso a textos e exercícios diários! ✦</p>
-      </div>`;
-  } else {
-    const answers = {};
-    body.innerHTML = `
-      <div class="daily-text-wrap">
-        <h3 class="res-title">Texto de hoje</h3>
-        <div class="daily-text">${DAILY.text.replace(/\n/g, '<br>')}</div>
-      </div>
-      <div class="daily-questions-wrap">
-        <h3 class="res-title" style="margin-top:24px">Exercícios</h3>
-        <div class="daily-questions">
-          ${DAILY.questions.map((q, qi) => `
-            <div class="daily-q" id="q${qi}">
-              <p class="daily-q-text"><strong>${qi + 1}.</strong> ${q.question}</p>
-              <div class="daily-options">
-                ${q.options.map(opt => `
-                  <button class="daily-opt" onclick="checkAnswer(${qi}, '${opt.letter}', '${q.answer}')"
-                          id="q${qi}-${opt.letter}">
-                    <span class="opt-letter">${opt.letter}</span>
-                    <span class="opt-text">${opt.text}</span>
-                  </button>`).join('')}
-              </div>
-              <p class="daily-feedback" id="feedback${qi}"></p>
-            </div>`).join('')}
-        </div>
-        <button class="daily-reset-btn" onclick="resetDaily()">Recomeçar ↺</button>
-      </div>`;
-  }
-
-  overlay.classList.add("open");
-  document.body.style.overflow = 'hidden';
-}
-
-function checkAnswer(qi, chosen, correct) {
-  // Disable all options for this question
-  const opts = document.querySelectorAll(`#q${qi} .daily-opt`);
-  opts.forEach(btn => btn.disabled = true);
-
-  // Color chosen and correct
-  const chosenBtn  = document.getElementById(`q${qi}-${chosen}`);
-  const correctBtn = document.getElementById(`q${qi}-${correct}`);
-  const feedback   = document.getElementById(`feedback${qi}`);
-
-  if (chosen === correct) {
-    chosenBtn.classList.add('correct');
-    feedback.textContent = "✦ Correct!";
-    feedback.className = "daily-feedback feedback-correct";
-  } else {
-    chosenBtn.classList.add('wrong');
-    correctBtn.classList.add('correct');
-    feedback.textContent = "The correct answer is " + correct.toUpperCase() + ".";
-    feedback.className = "daily-feedback feedback-wrong";
-  }
-}
-
-function resetDaily() {
-  openDaily();
-}
-
-function closeDaily() {
-  document.getElementById("dailyOverlay").classList.remove("open");
-  document.body.style.overflow = '';
-}
-
-document.getElementById("dailyOverlay").addEventListener("click", function(e) {
-  if (e.target === this) closeDaily();
-});
-
-// ============================================================
-// ✏️ EDITE AQUI — DADOS DA ALUNA
+// ✏️ SEMANAS DA ALUNA
 // ============================================================
 
 const WEEKS = [
   {
     number: 1,
     title: "To Be",
-    focus: "Aprender a estrutura de frases de ser/estar na afirmativa. Não se preocupe com perfeição — ouse falar!",
-
+    focus: "Aprender a estrutura de frases de ser/estar na afirmativa. Nao se preocupe com perfeicao — ouse falar!",
     pdfs: [],
-
     exercises: [
       "Pratique as frases do PDF enviado no WhatsApp",
-      "Escreva 3 frases apresentando você em inglês no caderno"
+      "Escreva 3 frases apresentando voce em ingles no caderno"
     ],
-
     audios: [
-      { label: "Pronúncia — enviado pelo WhatsApp", url: "" }
+      { label: "Pronuncia — enviado pelo WhatsApp", url: "" }
     ],
-
     links: [],
     videos: [],
-
+    notes: [],
+    classwork: [],
     vocabulary: [
-      { word: "to be",         translation: "ser / estar",               phonetic: "/tu bi/" },
-      { word: "to know",       translation: "saber / conhecer",          phonetic: "/tu noʊ/" },
-      { word: "to love",       translation: "amar",                      phonetic: "/tu lʌv/" },
-      { word: "to have",       translation: "ter",                       phonetic: "/tu hæv/" },
-      { word: "to like",       translation: "gostar",                    phonetic: "/tu laɪk/" },
-      { word: "to want",       translation: "querer",                    phonetic: "/tu wɒnt/" },
-      { word: "to hurt",       translation: "machucar",                  phonetic: "/tu hɜːt/" },
-      { word: "to drive",      translation: "dirigir",                   phonetic: "/tu draɪv/" },
-      { word: "today",         translation: "hoje",                      phonetic: "/təˈdeɪ/" },
-      { word: "tomorrow",      translation: "amanhã",                    phonetic: "/təˈmɒroʊ/" },
-      { word: "yesterday",     translation: "ontem",                     phonetic: "/ˈjɛstərdeɪ/" },
-      { word: "week",          translation: "semana",                    phonetic: "/wiːk/" },
-      { word: "month",         translation: "mês",                       phonetic: "/mʌnθ/" },
-      { word: "year",          translation: "ano",                       phonetic: "/jɪər/" },
-      { word: "here",          translation: "aqui",                      phonetic: "/hɪər/" },
-      { word: "there",         translation: "lá",                        phonetic: "/ðɛər/" },
-      { word: "pen",           translation: "caneta",                    phonetic: "/pɛn/" },
-      { word: "pencil",        translation: "lápis",                     phonetic: "/ˈpɛnsɪl/" },
-      { word: "cousin",        translation: "primo(a)",                  phonetic: "/ˈkʌzɪn/" },
-      { word: "how",           translation: "como / quantos",            phonetic: "/haʊ/" },
-      { word: "relationship",  translation: "relação",                   phonetic: "/rɪˈleɪʃənʃɪp/" },
-      { word: "salad",         translation: "salada",                    phonetic: "/ˈsæləd/" },
-      { word: "brand",         translation: "marca",                     phonetic: "/brænd/" },
-      { word: "before",        translation: "antes",                     phonetic: "/bɪˈfɔːr/" },
-      { word: "after",         translation: "depois",                    phonetic: "/ˈɑːftər/" },
-      { word: "healthy",       translation: "saudável",                  phonetic: "/ˈhɛlθi/" },
-      { word: "great",         translation: "ótimo",                     phonetic: "/ɡreɪt/" },
-      { word: "water",         translation: "água",                      phonetic: "/ˈwɔːtər/" },
-      { word: "dress",         translation: "vestido",                   phonetic: "/drɛs/" },
-      { word: "about",         translation: "sobre",                     phonetic: "/əˈbaʊt/" },
-      { word: "mug",           translation: "caneca",                    phonetic: "/mʌɡ/" },
-      { word: "all",           translation: "tudo / todos / todas",      phonetic: "/ɔːl/" },
-      { word: "that",          translation: "aquilo — objeto/pessoa longe", phonetic: "/ðæt/" },
-      { word: "this",          translation: "isso — objeto/pessoa perto",   phonetic: "/ðɪs/" },
-      { word: "just",          translation: "apenas",                    phonetic: "/dʒʌst/" },
-      { word: "a / an",        translation: "um / uma",                  phonetic: "/ə/ /æn/" },
-      { word: "but",           translation: "mas",                       phonetic: "/bʌt/" },
-      { word: "beer",          translation: "cerveja",                   phonetic: "/bɪər/" },
+      { word: "to be",        translation: "ser / estar",                    phonetic: "/tu bi/" },
+      { word: "to know",      translation: "saber / conhecer",               phonetic: "/tu nou/" },
+      { word: "to love",      translation: "amar",                           phonetic: "/tu lav/" },
+      { word: "to have",      translation: "ter",                            phonetic: "/tu hav/" },
+      { word: "to like",      translation: "gostar",                         phonetic: "/tu laik/" },
+      { word: "to want",      translation: "querer",                         phonetic: "/tu wont/" },
+      { word: "to hurt",      translation: "machucar",                       phonetic: "/tu hert/" },
+      { word: "to drive",     translation: "dirigir",                        phonetic: "/tu draiv/" },
+      { word: "today",        translation: "hoje",                           phonetic: "/tudei/" },
+      { word: "tomorrow",     translation: "amanha",                         phonetic: "/tomorou/" },
+      { word: "yesterday",    translation: "ontem",                          phonetic: "/iesterdei/" },
+      { word: "week",         translation: "semana",                         phonetic: "/uik/" },
+      { word: "month",        translation: "mes",                            phonetic: "/manth/" },
+      { word: "year",         translation: "ano",                            phonetic: "/ier/" },
+      { word: "here",         translation: "aqui",                           phonetic: "/hier/" },
+      { word: "there",        translation: "la",                             phonetic: "/dher/" },
+      { word: "pen",          translation: "caneta",                         phonetic: "/pen/" },
+      { word: "pencil",       translation: "lapis",                          phonetic: "/pensil/" },
+      { word: "cousin",       translation: "primo(a)",                       phonetic: "/cazin/" },
+      { word: "how",          translation: "como / quantos",                 phonetic: "/hau/" },
+      { word: "relationship", translation: "relacao",                        phonetic: "/rileichenship/" },
+      { word: "salad",        translation: "salada",                         phonetic: "/salad/" },
+      { word: "brand",        translation: "marca",                          phonetic: "/brand/" },
+      { word: "before",       translation: "antes",                          phonetic: "/bifor/" },
+      { word: "after",        translation: "depois",                         phonetic: "/after/" },
+      { word: "healthy",      translation: "saudavel",                       phonetic: "/helthi/" },
+      { word: "great",        translation: "otimo",                          phonetic: "/greit/" },
+      { word: "water",        translation: "agua",                           phonetic: "/woter/" },
+      { word: "dress",        translation: "vestido",                        phonetic: "/dres/" },
+      { word: "about",        translation: "sobre",                          phonetic: "/abaut/" },
+      { word: "mug",          translation: "caneca",                         phonetic: "/mag/" },
+      { word: "all",          translation: "tudo / todos / todas",           phonetic: "/ol/" },
+      { word: "that",         translation: "aquilo — objeto ou pessoa longe", phonetic: "/dhat/" },
+      { word: "this",         translation: "isso — objeto ou pessoa perto",  phonetic: "/dhis/" },
+      { word: "just",         translation: "apenas",                         phonetic: "/djast/" },
+      { word: "a / an",       translation: "um / uma",                       phonetic: "/e/ /an/" },
+      { word: "but",          translation: "mas",                            phonetic: "/bat/" },
+      { word: "beer",         translation: "cerveja",                        phonetic: "/bier/" }
     ]
   },
 
@@ -229,383 +133,402 @@ const WEEKS = [
     number: 2,
     title: "Questions using To Be",
     focus: "Praticar estruturas gramaticais interrogativas com ser/estar.",
-
     pdfs: [],
-
     exercises: [
       "Escreva 4 perguntas usando To Be",
-      "Transforme estas frases em perguntas: 'You are okay.' / 'She is home.' / 'They are friends.'",
+      "Transforme estas frases em perguntas: You are okay. / She is home. / They are friends."
     ],
-
     audios: [
-      { label: "Pronúncia — enviado pelo WhatsApp", url: "" }
+      { label: "Pronuncia — enviado pelo WhatsApp", url: "" }
     ],
-
     links: [],
     videos: [],
-
+    notes: [],
+    classwork: [],
     vocabulary: []
-  }
+  },
 
-
-  ,{
+  {
     number: 3,
     title: "Review + Can/Can't",
-    focus: "Revisar To Be e Do/Does na prática e aprender a usar Can e Can't para falar o que você consegue fazer.",
-
+    focus: "Revisar To Be e Do/Does na pratica e aprender a usar Can e Can't para falar o que voce consegue fazer.",
     pdfs: [],
-
     exercises: [],
-
     audios: [
-      { label: "Pronúncia — enviado pelo WhatsApp", url: "" }
+      { label: "Pronuncia — enviado pelo WhatsApp", url: "" }
     ],
-
     links: [],
     videos: [],
-
     notes: [
-      "DO / DOES → usados para perguntas e negativas com verbos de ação",
-      "DO → I, You, We, They | DOES → He, She, It",
+      "DO / DOES — usados para perguntas e negativas com verbos de acao",
+      "DO — I, You, We, They | DOES — He, She, It",
       "Pergunta: Does your cousin drive a car? / Do you have a mug?",
-      "CAN = poder / conseguir → I can dance. She can speak English.",
-      "CAN'T = não poder / não conseguir → I can't drive. He can't see.",
-      "SPEAK = falar | SEE = ver | WATCH = assistir | DANCE = dançar",
+      "CAN = poder / conseguir — I can dance. She can speak English.",
+      "CAN'T = nao poder / nao conseguir — I can't drive. He can't see.",
+      "SPEAK = falar | SEE = ver | WATCH = assistir | DANCE = dancar"
     ],
-
-    vocabulary: [
-      { word: "can",      translation: "poder / conseguir",     phonetic: "/kæn/" },
-      { word: "can't",    translation: "não poder / não conseguir", phonetic: "/kɑːnt/" },
-      { word: "speak",    translation: "falar",                 phonetic: "/spiːk/" },
-      { word: "see",      translation: "ver",                   phonetic: "/siː/" },
-      { word: "watch",    translation: "assistir",              phonetic: "/wɒtʃ/" },
-      { word: "drive",    translation: "dirigir",               phonetic: "/draɪv/" },
-      { word: "dance",    translation: "dançar",                phonetic: "/dæns/" },
-    ],
-
     classwork: [
       {
-        title: "Parte 2 — Tradução (Português → Inglês)",
+        title: "Parte 2 — Traducao",
         instruction: "Use as palavras da sua lista para traduzir as frases abaixo.",
         items: [
-          { question: "Você tem uma caneca?",              answer: "Do you have a mug?" },
-          { question: "A cerveja está aqui?",              answer: "Is the beer here?" },
-          { question: "Ele gosta de salada, mas eu quero cerveja.", answer: "He likes salad but I want beer." },
-          { question: "Como está a relação?",              answer: "How is the relationship?" },
-          { question: "Hoje é um ótimo dia.",              answer: "Today is a great day." },
+          { q: "Voce tem uma caneca?",                          a: "Do you have a mug?" },
+          { q: "A cerveja esta aqui?",                          a: "Is the beer here?" },
+          { q: "Ele gosta de salada, mas eu quero cerveja.",    a: "He likes salad but I want beer." },
+          { q: "Como esta a relacao?",                          a: "How is the relationship?" },
+          { q: "Hoje e um otimo dia.",                          a: "Today is a great day." }
         ]
       },
       {
-        title: "Parte 3 — Transformação (Afirmativa → Interrogativa)",
+        title: "Parte 3 — Transformacao",
         instruction: "Transforme a frase positiva em uma pergunta.",
         items: [
-          { question: "That pencil is great.",         answer: "Is that pencil great?" },
-          { question: "Your cousin drives a car.",     answer: "Does your cousin drive a car?" },
-          { question: "This hurts today.",             answer: "Does this hurt today?" },
+          { q: "That pencil is great.",       a: "Is that pencil great?" },
+          { q: "Your cousin drives a car.",   a: "Does your cousin drive a car?" },
+          { q: "This hurts today.",           a: "Does this hurt today?" }
         ]
       },
       {
-        title: "Parte 4 — Preencha com o Vocabulário Correto",
-        instruction: "Complete as frases usando as palavras lógicas da lista.",
+        title: "Parte 4 — Complete as frases",
+        instruction: "Complete as frases usando as palavras logicas da lista.",
         items: [
-          { question: "I drink ___ before the weekend, but I drink ___ after.", answer: "I drink coke before the weekend, but I drink water after." },
-          { question: "___ you know about that relationship?",                  answer: "Do you know about that relationship?" },
-          { question: "It is ___.",                                             answer: "It is great! (ou qualquer adjetivo positivo)" },
+          { q: "I drink ___ before the weekend, but I drink ___ after.", a: "I drink coke before the weekend, but I drink water after." },
+          { q: "___ you know about that relationship?",                  a: "Do you know about that relationship?" },
+          { q: "It is ___.",                                             a: "It is great!" }
         ]
       }
+    ],
+    vocabulary: [
+      { word: "can",   translation: "poder / conseguir",        phonetic: "/kan/" },
+      { word: "can't", translation: "nao poder / nao conseguir", phonetic: "/kant/" },
+      { word: "speak", translation: "falar",                    phonetic: "/spik/" },
+      { word: "see",   translation: "ver",                      phonetic: "/si/" },
+      { word: "watch", translation: "assistir",                 phonetic: "/wotch/" },
+      { word: "drive", translation: "dirigir",                  phonetic: "/draiv/" },
+      { word: "dance", translation: "dancar",                   phonetic: "/dans/" }
     ]
   }
-
-  // ============================================================
-  // ✏️ PARA ADICIONAR UMA NOVA SEMANA:
-  // ,{
-  //   number: 3,
-  //   title: "Título",
-  //   focus: "Foco da semana.",
-  //   pdfs:      [],
-  //   exercises: ["Exercício 1"],
-  //   audios:    [],
-  //   links:     [],
-  //   videos:    [],
-  //   vocabulary: [
-  //     { word: "word", translation: "tradução", phonetic: "/.../" },
-  //   ]
-  // }
-  // ============================================================
 ];
 
 // ============================================================
-// ⬇️ A PARTIR DAQUI NÃO PRECISA MEXER
+// CLASSWORK ANSWERS — armazenado separado para evitar bugs
+// ============================================================
+var CW_ANSWERS = {};
+
+// ============================================================
+// DAILY CONTENT FUNCTIONS
+// ============================================================
+
+function openDaily() {
+  var overlay = document.getElementById("dailyOverlay");
+  var body    = document.getElementById("dailyBody");
+  var dateEl  = document.getElementById("dailyDate");
+  dateEl.textContent = DAILY.date;
+
+  if (PLAN !== "Fluency") {
+    body.innerHTML = '<div class="daily-locked">'
+      + '<span class="daily-lock-icon">🔒</span>'
+      + '<h3>Conteudo Fluency</h3>'
+      + '<p>O Daily Content e exclusivo para alunas do plano <strong>Fluency</strong>.</p>'
+      + '<p>Fale com a Yas para fazer o upgrade! ✦</p>'
+      + '</div>';
+  } else {
+    var html = '<div class="daily-text-wrap">'
+      + '<h3 class="res-title">Texto de hoje</h3>'
+      + '<div class="daily-text">' + DAILY.text + '</div>'
+      + '</div>'
+      + '<div class="daily-questions-wrap">'
+      + '<h3 class="res-title" style="margin-top:24px">Exercicios</h3>'
+      + '<div class="daily-questions">';
+
+    DAILY.questions.forEach(function(q, qi) {
+      html += '<div class="daily-q" id="q' + qi + '">'
+        + '<p class="daily-q-text"><strong>' + (qi+1) + '.</strong> ' + q.question + '</p>'
+        + '<div class="daily-options">';
+      q.options.forEach(function(opt) {
+        html += '<button class="daily-opt" id="q' + qi + '-' + opt.letter + '"'
+          + ' onclick="checkAnswer(' + qi + ',\'' + opt.letter + '\',\'' + q.answer + '\')">'
+          + '<span class="opt-letter">' + opt.letter + '</span>'
+          + '<span class="opt-text">' + opt.text + '</span>'
+          + '</button>';
+      });
+      html += '</div><p class="daily-feedback" id="feedback' + qi + '"></p></div>';
+    });
+
+    html += '</div><button class="daily-reset-btn" onclick="openDaily()">Recomecar ↺</button></div>';
+    body.innerHTML = html;
+  }
+
+  overlay.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function checkAnswer(qi, chosen, correct) {
+  var opts = document.querySelectorAll("#q" + qi + " .daily-opt");
+  opts.forEach(function(btn) { btn.disabled = true; });
+  var chosenBtn  = document.getElementById("q" + qi + "-" + chosen);
+  var correctBtn = document.getElementById("q" + qi + "-" + correct);
+  var feedback   = document.getElementById("feedback" + qi);
+  if (chosen === correct) {
+    chosenBtn.classList.add("correct");
+    feedback.textContent = "✦ Correct!";
+    feedback.className = "daily-feedback feedback-correct";
+  } else {
+    chosenBtn.classList.add("wrong");
+    correctBtn.classList.add("correct");
+    feedback.textContent = "The correct answer is " + correct.toUpperCase() + ".";
+    feedback.className = "daily-feedback feedback-wrong";
+  }
+}
+
+function closeDaily() {
+  document.getElementById("dailyOverlay").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+document.getElementById("dailyOverlay").addEventListener("click", function(e) {
+  if (e.target === this) closeDaily();
+});
+
+// ============================================================
+// MAIN FUNCTIONS
 // ============================================================
 
 function speakWord(word, btn) {
   if (!window.speechSynthesis) return;
   window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(word);
-  u.lang = 'en-US';
+  var u = new SpeechSynthesisUtterance(word);
+  u.lang = "en-US";
   u.rate = 0.85;
   if (btn) {
-    btn.classList.add('speaking');
-    u.onend  = () => btn.classList.remove('speaking');
-    u.onerror = () => btn.classList.remove('speaking');
+    btn.classList.add("speaking");
+    u.onend  = function() { btn.classList.remove("speaking"); };
+    u.onerror = function() { btn.classList.remove("speaking"); };
   }
   window.speechSynthesis.speak(u);
 }
 
 function hasContent(arr) {
-  return Array.isArray(arr) && arr.filter(i => i && i.label).length > 0;
+  return Array.isArray(arr) && arr.filter(function(i) { return i && i.label; }).length > 0;
 }
 
 function renderGrid() {
-  const grid = document.getElementById("weeksGrid");
-  grid.innerHTML = WEEKS.map((w, i) => {
-    const icons = [
-      hasContent(w.pdfs)        ? '<span class="ricon ricon-pdf"      title="PDF">P</span>'        : '',
-      hasContent(w.audios)      ? '<span class="ricon ricon-audio"    title="Áudio">A</span>'      : '',
-      hasContent(w.exercises)   ? '<span class="ricon ricon-exercise" title="Exercícios">E</span>' : '',
-      hasContent(w.links)       ? '<span class="ricon ricon-link"     title="Links">L</span>'      : '',
-      hasContent(w.videos)      ? '<span class="ricon ricon-video"    title="Vídeos">V</span>'     : '',
-      (w.vocabulary||[]).length ? '<span class="ricon ricon-vocab"    title="Vocabulário">W</span>': '',
-    ].join('');
-    return `
-      <article class="week-card" onclick="openModal(${i})" tabindex="0"
-               onkeydown="if(event.key==='Enter')openModal(${i})">
-        <div class="card-head">
-          <p class="card-number">Semana ${w.number}</p>
-          <h2 class="card-title">${w.title}</h2>
-        </div>
-        <div class="card-body">
-          <div class="card-icons">${icons}</div>
-          <div class="card-cta">
-            <span>Ver material</span>
-            <span class="card-cta-arrow">→</span>
-          </div>
-        </div>
-      </article>`;
-  }).join('');
+  var grid = document.getElementById("weeksGrid");
+  var html = "";
+  WEEKS.forEach(function(w, i) {
+    var icons = "";
+    if (hasContent(w.pdfs))        icons += '<span class="ricon ricon-pdf"      title="PDF">P</span>';
+    if (hasContent(w.audios))      icons += '<span class="ricon ricon-audio"    title="Audio">A</span>';
+    if (hasContent(w.exercises))   icons += '<span class="ricon ricon-exercise" title="Exercicios">E</span>';
+    if (hasContent(w.links))       icons += '<span class="ricon ricon-link"     title="Links">L</span>';
+    if (hasContent(w.videos))      icons += '<span class="ricon ricon-video"    title="Videos">V</span>';
+    if (w.vocabulary && w.vocabulary.length) icons += '<span class="ricon ricon-vocab" title="Vocabulario">W</span>';
+
+    html += '<article class="week-card" onclick="openModal(' + i + ')" tabindex="0">'
+      + '<div class="card-head">'
+      + '<p class="card-number">Semana ' + w.number + '</p>'
+      + '<h2 class="card-title">' + w.title + '</h2>'
+      + '</div>'
+      + '<div class="card-body">'
+      + '<div class="card-icons">' + icons + '</div>'
+      + '<div class="card-cta"><span>Ver material</span><span class="card-cta-arrow">→</span></div>'
+      + '</div>'
+      + '</article>';
+  });
+  grid.innerHTML = html;
 }
 
 function openModal(index) {
-  const w = WEEKS[index];
-  document.getElementById("modalWeekLabel").textContent = `Semana ${w.number}`;
+  var w = WEEKS[index];
+  document.getElementById("modalWeekLabel").textContent = "Semana " + w.number;
   document.getElementById("modalTitle").textContent     = w.title;
-  document.getElementById("modalFocus").textContent     = w.focus || '';
-  document.getElementById("modalBody").innerHTML = [
-    renderPdfs(w.pdfs),
-    renderExercises(w.exercises),
-    renderAudios(w.audios),
-    renderLinks(w.links),
-    renderVideos(w.videos),
-    renderNotes(w.notes),
-    renderClasswork(w.classwork),
-    renderVocabulary(w.vocabulary),
-    `<div class="yas-tip"><strong>Dica da YV</strong>Pratique todos os dias um pouco. Consistência é o que te leva à fluência. ✦</div>`
-  ].join('');
+  document.getElementById("modalFocus").textContent     = w.focus || "";
+  document.getElementById("modalBody").innerHTML =
+    renderPdfs(w.pdfs) +
+    renderExercises(w.exercises) +
+    renderAudios(w.audios) +
+    renderLinks(w.links) +
+    renderVideos(w.videos) +
+    renderNotes(w.notes) +
+    renderClasswork(w.classwork) +
+    renderVocabulary(w.vocabulary) +
+    '<div class="yas-tip"><strong>Dica da YV</strong>Pratique todos os dias um pouco. Consistencia e o que te leva a fluencia. ✦</div>';
   document.getElementById("overlay").classList.add("open");
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow = "hidden";
 }
 
 function closeModal() {
-  window.speechSynthesis && window.speechSynthesis.cancel();
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
   document.getElementById("overlay").classList.remove("open");
-  document.body.style.overflow = '';
+  document.body.style.overflow = "";
 }
 
 function renderPdfs(pdfs) {
-  const items = (pdfs || []).filter(p => p.label);
-  if (!items.length) return '';
-  return `<div class="resource-section">
-    <h3 class="res-title">PDFs</h3>
-    <div class="res-list">
-      ${items.map(p => `
-        <div class="res-item">
-          <span class="res-item-label">${p.label}</span>
-          <div class="res-actions">
-            <a href="${p.url}" target="_blank" class="btn-open">Abrir ↗</a>
-            <a href="${p.url}" download class="btn-download">Baixar</a>
-          </div>
-        </div>`).join('')}
-    </div>
-  </div>`;
+  var items = (pdfs || []).filter(function(p) { return p.label; });
+  if (!items.length) return "";
+  var html = '<div class="resource-section"><h3 class="res-title">PDFs</h3><div class="res-list">';
+  items.forEach(function(p) {
+    html += '<div class="res-item"><span class="res-item-label">' + p.label + '</span>'
+      + '<div class="res-actions">'
+      + '<a href="' + p.url + '" target="_blank" class="btn-open">Abrir ↗</a>'
+      + '<a href="' + p.url + '" download class="btn-download">Baixar</a>'
+      + '</div></div>';
+  });
+  return html + '</div></div>';
 }
 
 function renderExercises(exercises) {
-  const items = (exercises || []).filter(Boolean);
-  if (!items.length) return '';
-  return `<div class="resource-section">
-    <h3 class="res-title">Exercícios</h3>
-    <ul class="exercise-list">
-      ${items.map(e => `<li>${e}</li>`).join('')}
-    </ul>
-  </div>`;
+  var items = (exercises || []).filter(Boolean);
+  if (!items.length) return "";
+  var html = '<div class="resource-section"><h3 class="res-title">Exercicios</h3><ul class="exercise-list">';
+  items.forEach(function(e) { html += '<li>' + e + '</li>'; });
+  return html + '</ul></div>';
 }
 
 function renderAudios(audios) {
-  const items = (audios || []).filter(a => a.label);
-  if (!items.length) return '';
-  return `<div class="resource-section">
-    <h3 class="res-title">Áudios</h3>
-    <div class="res-list">
-      ${items.map(a => a.url
-        ? `<div class="res-item audio-item">
-             <span class="res-item-label">${a.label}</span>
-             <audio controls preload="none"><source src="${a.url}"></audio>
-           </div>`
-        : `<div class="res-item">
-             <span class="res-item-label">${a.label}</span>
-             <span class="via-whatsapp">via WhatsApp</span>
-           </div>`
-      ).join('')}
-    </div>
-  </div>`;
+  var items = (audios || []).filter(function(a) { return a.label; });
+  if (!items.length) return "";
+  var html = '<div class="resource-section"><h3 class="res-title">Audios</h3><div class="res-list">';
+  items.forEach(function(a) {
+    if (a.url) {
+      html += '<div class="res-item audio-item"><span class="res-item-label">' + a.label + '</span>'
+        + '<audio controls preload="none"><source src="' + a.url + '"></audio></div>';
+    } else {
+      html += '<div class="res-item"><span class="res-item-label">' + a.label + '</span>'
+        + '<span class="via-whatsapp">via WhatsApp</span></div>';
+    }
+  });
+  return html + '</div></div>';
 }
 
 function renderLinks(links) {
-  const items = (links || []).filter(l => l.label);
-  if (!items.length) return '';
-  return `<div class="resource-section">
-    <h3 class="res-title">Links</h3>
-    <div class="res-list">
-      ${items.map(l => `
-        <div class="res-item">
-          <span class="res-item-label">${l.label}</span>
-          <div class="res-actions">
-            <a href="${l.url}" target="_blank" class="btn-open">Abrir ↗</a>
-          </div>
-        </div>`).join('')}
-    </div>
-  </div>`;
+  var items = (links || []).filter(function(l) { return l.label; });
+  if (!items.length) return "";
+  var html = '<div class="resource-section"><h3 class="res-title">Links</h3><div class="res-list">';
+  items.forEach(function(l) {
+    html += '<div class="res-item"><span class="res-item-label">' + l.label + '</span>'
+      + '<div class="res-actions"><a href="' + l.url + '" target="_blank" class="btn-open">Abrir ↗</a></div></div>';
+  });
+  return html + '</div></div>';
 }
 
 function renderVideos(videos) {
-  const items = (videos || []).filter(v => v.label);
-  if (!items.length) return '';
-  return `<div class="resource-section">
-    <h3 class="res-title">Vídeos</h3>
-    <div class="res-list">
-      ${items.map(v => `
-        <div class="res-item">
-          <span class="res-item-label">${v.label}</span>
-          <div class="res-actions">
-            <a href="${v.url}" target="_blank" class="btn-open">Assistir ↗</a>
-          </div>
-        </div>`).join('')}
-    </div>
-  </div>`;
+  var items = (videos || []).filter(function(v) { return v.label; });
+  if (!items.length) return "";
+  var html = '<div class="resource-section"><h3 class="res-title">Videos</h3><div class="res-list">';
+  items.forEach(function(v) {
+    html += '<div class="res-item"><span class="res-item-label">' + v.label + '</span>'
+      + '<div class="res-actions"><a href="' + v.url + '" target="_blank" class="btn-open">Assistir ↗</a></div></div>';
+  });
+  return html + '</div></div>';
 }
 
 function renderNotes(notes) {
-  const items = (notes || []).filter(Boolean);
-  if (!items.length) return '';
-  return `<div class="resource-section">
-    <h3 class="res-title">Notas da Aula</h3>
-    <ul class="notes-list">
-      ${items.map(n => `<li>${n}</li>`).join('')}
-    </ul>
-  </div>`;
+  var items = (notes || []).filter(Boolean);
+  if (!items.length) return "";
+  var html = '<div class="resource-section"><h3 class="res-title">Notas da Aula</h3><ul class="notes-list">';
+  items.forEach(function(n) { html += '<li>' + n + '</li>'; });
+  return html + '</ul></div>';
 }
-
-function renderVocabulary(vocabulary) {
-  const items = (vocabulary || []).filter(v => v.word);
-  if (!items.length) return '';
-  return `<div class="resource-section">
-    <h3 class="res-title">Vocabulário</h3>
-    <div class="vocab-grid">
-      ${items.map(v => `
-        <div class="vocab-card" tabindex="0"
-             onclick="this.classList.toggle('flipped')"
-             onkeydown="if(event.key==='Enter')this.classList.toggle('flipped')">
-          <div class="vocab-front">
-            <button class="vocab-speak-btn"
-              onclick="event.stopPropagation(); speakWord('${v.word.replace(/'/g,"\\'")}', this)"
-              title="Ouvir pronúncia">🔊</button>
-            <div class="vocab-front-inner">
-              <span class="vocab-word">${v.word}</span>
-              ${v.phonetic ? `<span class="vocab-phonetic">${v.phonetic}</span>` : ''}
-            </div>
-            <span class="vocab-hint">toque para ver</span>
-          </div>
-          <div class="vocab-back">
-            <span class="vocab-translation">${v.translation}</span>
-          </div>
-        </div>`).join('')}
-    </div>
-  </div>`;
-}
-
 
 function renderClasswork(classwork) {
-  const sections = (classwork || []).filter(s => s.title);
-  if (!sections.length) return '';
-
-  // Store answers in a global map to avoid inline quote escaping issues
-  window._cwAnswers = window._cwAnswers || {};
-
-  return sections.map((section, si) => {
-    return '<div class="resource-section">'
+  var sections = (classwork || []).filter(function(s) { return s.title; });
+  if (!sections.length) return "";
+  var html = "";
+  sections.forEach(function(section, si) {
+    html += '<div class="resource-section">'
       + '<h3 class="res-title">' + section.title + '</h3>'
       + '<p class="classwork-instruction">' + section.instruction + '</p>'
-      + '<div class="classwork-list">'
-      + section.items.map((item, i) => {
-          const key = 'cw_' + si + '_' + i;
-          window._cwAnswers[key] = item.answer;
-          return '<div class="classwork-item">'
-            + '<p class="classwork-q"><strong>' + (i + 1) + '.</strong> ' + item.question + '</p>'
-            + '<button class="classwork-reveal-btn" onclick="revealAnswer(this, '' + key + '')">'
-            + 'Ver resposta</button>'
-            + '<p class="classwork-answer" style="display:none"></p>'
-            + '</div>';
-        }).join('')
-      + '</div></div>';
-  }).join('');
+      + '<div class="classwork-list">';
+    section.items.forEach(function(item, ii) {
+      var key = "cw_" + si + "_" + ii;
+      CW_ANSWERS[key] = item.a;
+      html += '<div class="classwork-item">'
+        + '<p class="classwork-q"><strong>' + (ii+1) + '.</strong> ' + item.q + '</p>'
+        + '<button class="classwork-reveal-btn" onclick="revealAnswer(this,\'' + key + '\')">Ver resposta</button>'
+        + '<p class="classwork-answer" id="' + key + '" style="display:none"></p>'
+        + '</div>';
+    });
+    html += '</div></div>';
+  });
+  return html;
 }
 
 function revealAnswer(btn, key) {
-  const item = btn.parentElement;
-  const answerEl = item.querySelector('.classwork-answer');
-  answerEl.textContent = window._cwAnswers[key] || '';
-  answerEl.style.display = 'block';
-  btn.style.display = 'none';
+  var el = document.getElementById(key);
+  if (el) {
+    el.textContent = CW_ANSWERS[key] || "";
+    el.style.display = "block";
+  }
+  btn.style.display = "none";
 }
 
+function renderVocabulary(vocabulary) {
+  var items = (vocabulary || []).filter(function(v) { return v.word; });
+  if (!items.length) return "";
+  var html = '<div class="resource-section"><h3 class="res-title">Vocabulario</h3><div class="vocab-grid">';
+  items.forEach(function(v) {
+    var safeWord = v.word.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+    html += '<div class="vocab-card" tabindex="0" onclick="this.classList.toggle(\'flipped\')">'
+      + '<div class="vocab-front">'
+      + '<button class="vocab-speak-btn" onclick="event.stopPropagation();speakWord(\'' + safeWord + '\',this)" title="Ouvir">🔊</button>'
+      + '<div class="vocab-front-inner">'
+      + '<span class="vocab-word">' + v.word + '</span>'
+      + (v.phonetic ? '<span class="vocab-phonetic">' + v.phonetic + '</span>' : '')
+      + '</div>'
+      + '<span class="vocab-hint">toque para ver</span>'
+      + '</div>'
+      + '<div class="vocab-back"><span class="vocab-translation">' + v.translation + '</span></div>'
+      + '</div>';
+  });
+  return html + '</div></div>';
+}
 
 function renderGlossary() {
-  const section = document.getElementById("glossarySection");
+  var section = document.getElementById("glossarySection");
   if (!section) return;
-  const all = [];
-  WEEKS.forEach(w => {
-    (w.vocabulary || []).filter(v => v.word).forEach(v => {
-      all.push({ ...v, week: w.number });
+  var all = [];
+  WEEKS.forEach(function(w) {
+    (w.vocabulary || []).filter(function(v) { return v.word; }).forEach(function(v) {
+      all.push({ word: v.word, translation: v.translation, phonetic: v.phonetic, week: w.number });
     });
   });
   if (!all.length) {
-    section.innerHTML = '<p class="glossary-empty">O glossário vai aparecer aqui conforme as semanas forem avançando. ✦</p>';
+    section.innerHTML = '<p class="glossary-empty">O glossario vai aparecer aqui conforme as semanas forem avancando. ✦</p>';
     return;
   }
-  section.innerHTML = all.map(v => `
-    <div class="glossary-row">
-      <span class="glos-word">${v.word}</span>
-      <span class="glos-trans">
-        ${v.translation}
-        ${v.phonetic ? `<span class="glos-phonetic">${v.phonetic}</span>` : ''}
-      </span>
-      <button class="glos-speak" onclick="speakWord('${v.word.replace(/'/g,"\\'")}', this)" title="Ouvir">🔊</button>
-      <span class="glos-week-badge">Sem. ${v.week}</span>
-    </div>`).join('');
+  var html = "";
+  all.forEach(function(v) {
+    var safeWord = v.word.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+    html += '<div class="glossary-row">'
+      + '<span class="glos-word">' + v.word + '</span>'
+      + '<span class="glos-trans">' + v.translation
+      + (v.phonetic ? ' <span class="glos-phonetic">' + v.phonetic + '</span>' : '')
+      + '</span>'
+      + '<button class="glos-speak" onclick="speakWord(\'' + safeWord + '\',this)" title="Ouvir">🔊</button>'
+      + '<span class="glos-week-badge">Sem. ' + v.week + '</span>'
+      + '</div>';
+  });
+  section.innerHTML = html;
 }
+
+// ============================================================
+// EVENT LISTENERS
+// ============================================================
 
 document.getElementById("overlay").addEventListener("click", function(e) {
   if (e.target === this) closeModal();
 });
-document.addEventListener("keydown", e => {
+
+document.addEventListener("keydown", function(e) {
   if (e.key === "Escape") closeModal();
 });
 
-let touchStartY = 0;
-document.addEventListener("touchstart", e => {
+var touchStartY = 0;
+document.addEventListener("touchstart", function(e) {
   touchStartY = e.touches[0].clientY;
 }, { passive: true });
-document.addEventListener("touchmove", e => {
+document.addEventListener("touchmove", function(e) {
   if (document.getElementById("overlay").classList.contains("open")) {
     if (e.touches[0].clientY - touchStartY > 100) closeModal();
   }
