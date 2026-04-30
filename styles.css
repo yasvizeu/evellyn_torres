@@ -585,6 +585,7 @@ main {
 .daily-btn-wrap {
   max-width: 860px;
   margin: 0 auto 40px;
+  padding: 0 4px;
 }
 
 .daily-btn {
@@ -593,35 +594,41 @@ main {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  padding: 24px 28px;
-  background:
-    radial-gradient(ellipse at 0% 50%, rgba(200,136,58,.12), transparent 60%),
-    linear-gradient(135deg, var(--plum), var(--plum-mid));
+  padding: 22px 28px 26px;
+  background: var(--plum);
   border: none;
-  border-radius: var(--radius);
   cursor: pointer;
   text-align: left;
   transition: transform .22s ease, box-shadow .22s ease;
-  box-shadow: 0 4px 24px rgba(61,38,69,.18);
+  box-shadow: 0 6px 28px rgba(61,38,69,.22), 0 2px 6px rgba(61,38,69,.12);
   position: relative;
-  overflow: hidden;
-}
-
-.daily-btn::after {
-  content: '';
-  position: absolute;
-  right: -40px;
-  top: -40px;
-  width: 130px;
-  height: 130px;
-  border: 1.5px solid rgba(240,200,122,.12);
-  border-radius: 50%;
-  pointer-events: none;
+  /* torn paper edges using clip-path */
+  clip-path: polygon(
+    0% 4px, 6px 0%, 14px 5px, 22px 1px, 30px 6px, 40px 0%,
+    50px 4px, 60px 0%, 70px 5px, 82px 1px, 94px 4px, 106px 0%,
+    118px 5px, 130px 1px, 142px 4px, 154px 0%, 166px 5px, 180px 2px,
+    194px 5px, 208px 0%, 222px 4px, 240px 1px, 260px 5px, 280px 0%,
+    300px 4px, 320px 1px, 340px 5px, 360px 0%, 380px 3px, 400px 0%,
+    420px 4px, 440px 1px, 460px 5px, 480px 0%, 500px 4px,
+    calc(100% - 20px) 2px, calc(100% - 10px) 0%, calc(100% - 4px) 4px, 100% 2px,
+    100% calc(100% - 5px), calc(100% - 8px) 100%, calc(100% - 18px) calc(100% - 4px),
+    calc(100% - 30px) 100%, calc(100% - 42px) calc(100% - 5px),
+    calc(100% - 56px) 100%, calc(100% - 70px) calc(100% - 3px),
+    calc(100% - 86px) 100%, calc(100% - 102px) calc(100% - 5px),
+    calc(100% - 120px) 100%, calc(100% - 140px) calc(100% - 4px),
+    calc(100% - 160px) 100%, calc(100% - 182px) calc(100% - 5px),
+    calc(100% - 206px) 100%, calc(100% - 230px) calc(100% - 3px),
+    calc(100% - 256px) 100%, calc(100% - 284px) calc(100% - 5px),
+    320px 100%, 290px calc(100% - 4px), 260px 100%, 230px calc(100% - 5px),
+    200px 100%, 170px calc(100% - 3px), 140px 100%, 110px calc(100% - 5px),
+    80px 100%, 50px calc(100% - 4px), 20px 100%, 8px calc(100% - 5px),
+    0% calc(100% - 3px)
+  );
 }
 
 .daily-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 36px rgba(61,38,69,.28);
+  transform: translateY(-2px) rotate(-.3deg);
+  box-shadow: 0 10px 36px rgba(61,38,69,.3);
 }
 
 .daily-btn-left {
@@ -641,14 +648,15 @@ main {
 
 .daily-btn-title {
   font-family: 'Playfair Display', serif;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 600;
+  font-style: italic;
   color: #fff;
   line-height: 1.2;
 }
 
 .daily-btn-sub {
-  font-size: .76rem;
+  font-size: .74rem;
   color: rgba(255,255,255,.5);
   font-weight: 300;
 }
@@ -657,32 +665,25 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   flex-shrink: 0;
 }
 
 .daily-pin {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   line-height: 1;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,.2));
 }
 
 .daily-btn-cta {
-  font-size: .75rem;
+  font-size: .72rem;
   font-weight: 600;
   color: var(--amber-soft);
   white-space: nowrap;
-  transition: letter-spacing .2s;
-}
-
-.daily-btn:hover .daily-btn-cta {
-  letter-spacing: .04em;
 }
 
 @media (min-width: 540px) {
-  .daily-btn { padding: 28px 32px; }
-  .daily-btn-title { font-size: 1.45rem; }
-  .daily-pin { font-size: 2rem; }
+  .daily-btn { padding: 26px 34px 30px; }
+  .daily-btn-title { font-size: 1.35rem; }
 }
 
 /* ── DAILY ASIDE ── */
