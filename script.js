@@ -2,7 +2,7 @@
 // ✏️ DAILY CONTENT — atualize aqui sempre que quiser
 // ============================================================
 
-const PLAN = "Foundation"; // ✏️ Troque para "Fluency" para liberar o conteúdo
+const PLAN = "Fluency"; // ✏️ Troque para "Fluency" para liberar o conteúdo
 
 const DAILY = {
   date: "30 de abril, 2026",   // ✏️ Data de hoje
