@@ -1,4 +1,165 @@
 // ============================================================
+// ✏️ DAILY CONTENT — atualize aqui sempre que quiser
+// ============================================================
+
+const PLAN = "Foundation"; // ✏️ Troque para "Fluency" para liberar o conteúdo
+
+const DAILY = {
+  date: "30 de abril, 2026",   // ✏️ Data de hoje
+
+  // ✏️ TEXTO — pode ser um parágrafo curto, diálogo, notícia, etc.
+  text: `Sarah and Tom are at a coffee shop. Sarah is a teacher and Tom is her student.
+Tom is nervous, but Sarah is very kind. "Are you okay?" she asks.
+"I am fine, thank you! I am just a little tired," Tom says.
+"That's okay. We are here to learn, not to be perfect!" Sarah smiles.`,
+
+  // ✏️ 5 PERGUNTAS DE MÚLTIPLA ESCOLHA (a, b, c, d, e)
+  questions: [
+    {
+      question: "Where are Sarah and Tom?",
+      options: [
+        { letter: "a", text: "At school" },
+        { letter: "b", text: "At a coffee shop" },
+        { letter: "c", text: "At home" },
+        { letter: "d", text: "At work" },
+        { letter: "e", text: "At the park" },
+      ],
+      answer: "b"
+    },
+    {
+      question: "What is Sarah's job?",
+      options: [
+        { letter: "a", text: "She is a doctor" },
+        { letter: "b", text: "She is a student" },
+        { letter: "c", text: "She is a teacher" },
+        { letter: "d", text: "She is a nurse" },
+        { letter: "e", text: "She is a chef" },
+      ],
+      answer: "c"
+    },
+    {
+      question: "How does Tom feel?",
+      options: [
+        { letter: "a", text: "He is happy" },
+        { letter: "b", text: "He is angry" },
+        { letter: "c", text: "He is nervous" },
+        { letter: "d", text: "He is sad" },
+        { letter: "e", text: "He is excited" },
+      ],
+      answer: "c"
+    },
+    {
+      question: "What does Sarah ask Tom?",
+      options: [
+        { letter: "a", text: "Are you tired?" },
+        { letter: "b", text: "Are you okay?" },
+        { letter: "c", text: "Are you a teacher?" },
+        { letter: "d", text: "Are you hungry?" },
+        { letter: "e", text: "Are you ready?" },
+      ],
+      answer: "b"
+    },
+    {
+      question: "What does Sarah say about learning?",
+      options: [
+        { letter: "a", text: "We are here to be perfect" },
+        { letter: "b", text: "We are here to be tired" },
+        { letter: "c", text: "We are here to work" },
+        { letter: "d", text: "We are here to learn, not to be perfect" },
+        { letter: "e", text: "We are here to drink coffee" },
+      ],
+      answer: "d"
+    },
+  ]
+};
+
+// ============================================================
+// ⬇️ FUNÇÕES DO DAILY CONTENT — não mexa
+// ============================================================
+
+function openDaily() {
+  const overlay = document.getElementById("dailyOverlay");
+  const body    = document.getElementById("dailyBody");
+  const dateEl  = document.getElementById("dailyDate");
+
+  dateEl.textContent = DAILY.date || "";
+
+  if (PLAN !== "Fluency") {
+    body.innerHTML = `
+      <div class="daily-locked">
+        <span class="daily-lock-icon">🔒</span>
+        <h3>Conteúdo Fluency</h3>
+        <p>O Daily Content é exclusivo para alunas do plano <strong>Fluency</strong>.</p>
+        <p>Fale com a Yas para fazer o upgrade e ter acesso a textos e exercícios diários! ✦</p>
+      </div>`;
+  } else {
+    const answers = {};
+    body.innerHTML = `
+      <div class="daily-text-wrap">
+        <h3 class="res-title">Texto de hoje</h3>
+        <div class="daily-text">${DAILY.text.replace(/\n/g, '<br>')}</div>
+      </div>
+      <div class="daily-questions-wrap">
+        <h3 class="res-title" style="margin-top:24px">Exercícios</h3>
+        <div class="daily-questions">
+          ${DAILY.questions.map((q, qi) => `
+            <div class="daily-q" id="q${qi}">
+              <p class="daily-q-text"><strong>${qi + 1}.</strong> ${q.question}</p>
+              <div class="daily-options">
+                ${q.options.map(opt => `
+                  <button class="daily-opt" onclick="checkAnswer(${qi}, '${opt.letter}', '${q.answer}')"
+                          id="q${qi}-${opt.letter}">
+                    <span class="opt-letter">${opt.letter}</span>
+                    <span class="opt-text">${opt.text}</span>
+                  </button>`).join('')}
+              </div>
+              <p class="daily-feedback" id="feedback${qi}"></p>
+            </div>`).join('')}
+        </div>
+        <button class="daily-reset-btn" onclick="resetDaily()">Recomeçar ↺</button>
+      </div>`;
+  }
+
+  overlay.classList.add("open");
+  document.body.style.overflow = 'hidden';
+}
+
+function checkAnswer(qi, chosen, correct) {
+  // Disable all options for this question
+  const opts = document.querySelectorAll(`#q${qi} .daily-opt`);
+  opts.forEach(btn => btn.disabled = true);
+
+  // Color chosen and correct
+  const chosenBtn  = document.getElementById(`q${qi}-${chosen}`);
+  const correctBtn = document.getElementById(`q${qi}-${correct}`);
+  const feedback   = document.getElementById(`feedback${qi}`);
+
+  if (chosen === correct) {
+    chosenBtn.classList.add('correct');
+    feedback.textContent = "✦ Correct!";
+    feedback.className = "daily-feedback feedback-correct";
+  } else {
+    chosenBtn.classList.add('wrong');
+    correctBtn.classList.add('correct');
+    feedback.textContent = "The correct answer is " + correct.toUpperCase() + ".";
+    feedback.className = "daily-feedback feedback-wrong";
+  }
+}
+
+function resetDaily() {
+  openDaily();
+}
+
+function closeDaily() {
+  document.getElementById("dailyOverlay").classList.remove("open");
+  document.body.style.overflow = '';
+}
+
+document.getElementById("dailyOverlay").addEventListener("click", function(e) {
+  if (e.target === this) closeDaily();
+});
+
+// ============================================================
 // ✏️ EDITE AQUI — DADOS DA ALUNA
 // ============================================================
 
@@ -8,36 +169,59 @@ const WEEKS = [
     title: "To Be",
     focus: "Aprender a estrutura de frases de ser/estar na afirmativa. Não se preocupe com perfeição — ouse falar!",
 
-    pdfs: [
-      { label: "To Be – Semana 1", url: "https://drive.google.com/file/d/1Sy2vF5MsjdcpRLBHGqVCNOPtS8N5dBYf/view?usp=sharing" }
-    ],
+    pdfs: [],
 
     exercises: [
-      "Pratique os exercícios do PDF abaixo",
-      "Escreva 3 frases apresentando você em inglês no seu caderno"
+      "Pratique as frases do PDF enviado no WhatsApp",
+      "Escreva 3 frases apresentando você em inglês no caderno"
     ],
 
-    // Com arquivo:   { label: "Nome", url: "audios/arquivo.mp3" }
-    // Pelo WhatsApp: { label: "Nome — enviado pelo WhatsApp", url: "" }
     audios: [
-      { label: "", url: "" }
+      { label: "Pronúncia — enviado pelo WhatsApp", url: "" }
     ],
 
-    links: [
-      { label: "BBC Learning English – greetings", url: "https://www.bbc.co.uk/learningenglish" }
-    ],
-
+    links: [],
     videos: [],
 
-    // ✏️ ADICIONE VOCABULÁRIO AQUI
-    // { word: "palavra em inglês", translation: "tradução em português" }
     vocabulary: [
-      { word: "to be", translation: "ser / estar" },
-      { word: "I am", translation: "eu sou / estou" },
-      { word: "you are", translation: "você é / está" },
-      { word: "she is", translation: "ela é / está" },
-      { word: "we are", translation: "nós somos / estamos" },
-      { word: "they are", translation: "eles são / estão" },
+      { word: "to be",         translation: "ser / estar",               phonetic: "/tu bi/" },
+      { word: "to know",       translation: "saber / conhecer",          phonetic: "/tu noʊ/" },
+      { word: "to love",       translation: "amar",                      phonetic: "/tu lʌv/" },
+      { word: "to have",       translation: "ter",                       phonetic: "/tu hæv/" },
+      { word: "to like",       translation: "gostar",                    phonetic: "/tu laɪk/" },
+      { word: "to want",       translation: "querer",                    phonetic: "/tu wɒnt/" },
+      { word: "to hurt",       translation: "machucar",                  phonetic: "/tu hɜːt/" },
+      { word: "to drive",      translation: "dirigir",                   phonetic: "/tu draɪv/" },
+      { word: "today",         translation: "hoje",                      phonetic: "/təˈdeɪ/" },
+      { word: "tomorrow",      translation: "amanhã",                    phonetic: "/təˈmɒroʊ/" },
+      { word: "yesterday",     translation: "ontem",                     phonetic: "/ˈjɛstərdeɪ/" },
+      { word: "week",          translation: "semana",                    phonetic: "/wiːk/" },
+      { word: "month",         translation: "mês",                       phonetic: "/mʌnθ/" },
+      { word: "year",          translation: "ano",                       phonetic: "/jɪər/" },
+      { word: "here",          translation: "aqui",                      phonetic: "/hɪər/" },
+      { word: "there",         translation: "lá",                        phonetic: "/ðɛər/" },
+      { word: "pen",           translation: "caneta",                    phonetic: "/pɛn/" },
+      { word: "pencil",        translation: "lápis",                     phonetic: "/ˈpɛnsɪl/" },
+      { word: "cousin",        translation: "primo(a)",                  phonetic: "/ˈkʌzɪn/" },
+      { word: "how",           translation: "como / quantos",            phonetic: "/haʊ/" },
+      { word: "relationship",  translation: "relação",                   phonetic: "/rɪˈleɪʃənʃɪp/" },
+      { word: "salad",         translation: "salada",                    phonetic: "/ˈsæləd/" },
+      { word: "brand",         translation: "marca",                     phonetic: "/brænd/" },
+      { word: "before",        translation: "antes",                     phonetic: "/bɪˈfɔːr/" },
+      { word: "after",         translation: "depois",                    phonetic: "/ˈɑːftər/" },
+      { word: "healthy",       translation: "saudável",                  phonetic: "/ˈhɛlθi/" },
+      { word: "great",         translation: "ótimo",                     phonetic: "/ɡreɪt/" },
+      { word: "water",         translation: "água",                      phonetic: "/ˈwɔːtər/" },
+      { word: "dress",         translation: "vestido",                   phonetic: "/drɛs/" },
+      { word: "about",         translation: "sobre",                     phonetic: "/əˈbaʊt/" },
+      { word: "mug",           translation: "caneca",                    phonetic: "/mʌɡ/" },
+      { word: "all",           translation: "tudo / todos / todas",      phonetic: "/ɔːl/" },
+      { word: "that",          translation: "aquilo — objeto/pessoa longe", phonetic: "/ðæt/" },
+      { word: "this",          translation: "isso — objeto/pessoa perto",   phonetic: "/ðɪs/" },
+      { word: "just",          translation: "apenas",                    phonetic: "/dʒʌst/" },
+      { word: "a / an",        translation: "um / uma",                  phonetic: "/ə/ /æn/" },
+      { word: "but",           translation: "mas",                       phonetic: "/bʌt/" },
+      { word: "beer",          translation: "cerveja",                   phonetic: "/bɪər/" },
     ]
   },
 
@@ -49,76 +233,33 @@ const WEEKS = [
     pdfs: [],
 
     exercises: [
-      "Escreva 4 perguntas com To Be",
-      "Grave um áudio curto falando 3 frases sobre sua rotina"
+      "Escreva 4 perguntas usando To Be",
+      "Transforme estas frases em perguntas: 'You are okay.' / 'She is home.' / 'They are friends.'",
     ],
 
     audios: [
-      { label: "", url: "" }
+      { label: "Pronúncia — enviado pelo WhatsApp", url: "" }
     ],
 
     links: [],
     videos: [],
 
-   
-      vocabulary: [
-  { word: "today", translation: "hoje" },
-  { word: "tomorrow", translation: "amanhã" },
-  { word: "yesterday", translation: "ontem" },
-  { word: "week", translation: "semana" },
-  { word: "month", translation: "mês" },
-  { word: "year", translation: "ano" },
-  { word: "here", translation: "aqui" },
-  { word: "there", translation: "lá" },
-  { word: "pen", translation: "caneta" },
-  { word: "pencil", translation: "lápis" },
-  { word: "cousin", translation: "primo(a)" },
-  { word: "how", translation: "como / quantos" },
-  { word: "relationship", translation: "relação" },
-  { word: "salad", translation: "salada" },
-  { word: "brand", translation: "marca" },
-  { word: "before", translation: "antes" },
-  { word: "after", translation: "depois" },
-  { word: "healthy", translation: "saudável" },
-  { word: "great", translation: "ótimo" },
-  { word: "water", translation: "água" },
-  { word: "dress", translation: "vestido" },
-  { word: "about", translation: "sobre" },
-  { word: "mug", translation: "caneca" },
-  { word: "all", translation: "tudo / todos / todas" },
-  { word: "that", translation: "aquilo / aquele(a) — objeto ou pessoa longe" },
-  { word: "this", translation: "isso / este(a) — objeto ou pessoa perto" },
-  { word: "to know", translation: "saber / conhecer" },
-  { word: "to be", translation: "ser / estar" },
-  { word: "to love", translation: "amar" },
-  { word: "to have", translation: "ter" },
-  { word: "to like", translation: "gostar" },
-  { word: "to want", translation: "querer" },
-  { word: "to hurt", translation: "machucar" },
-  { word: "to drive", translation: "dirigir" },
-  { word: "just", translation: "apenas" },
-  { word: "a / an", translation: "um / uma" },
-  { word: "but", translation: "mas" },
-  { word: "beer", translation: "cerveja" },
-],
-    
+    vocabulary: []
   }
 
   // ============================================================
-  // ✏️ PARA ADICIONAR UMA NOVA SEMANA, copie e cole este modelo
-  // antes do ] acima, com vírgula depois da semana anterior:
-  //
+  // ✏️ PARA ADICIONAR UMA NOVA SEMANA:
   // ,{
   //   number: 3,
-  //   title: "Family",
-  //   focus: "Vocabulário de família e frases com he/she/they.",
-  //   pdfs:      [{ label: "Family – Semana 3", url: "pdfs/semana3.pdf" }],
-  //   exercises: ["Faça os exercícios do PDF", "Grave 3 frases sobre sua família"],
+  //   title: "Título",
+  //   focus: "Foco da semana.",
+  //   pdfs:      [],
+  //   exercises: ["Exercício 1"],
   //   audios:    [],
   //   links:     [],
   //   videos:    [],
   //   vocabulary: [
-  //     { word: "palavra", translation: "tradução" },
+  //     { word: "word", translation: "tradução", phonetic: "/.../" },
   //   ]
   // }
   // ============================================================
@@ -128,6 +269,20 @@ const WEEKS = [
 // ⬇️ A PARTIR DAQUI NÃO PRECISA MEXER
 // ============================================================
 
+function speakWord(word, btn) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(word);
+  u.lang = 'en-US';
+  u.rate = 0.85;
+  if (btn) {
+    btn.classList.add('speaking');
+    u.onend  = () => btn.classList.remove('speaking');
+    u.onerror = () => btn.classList.remove('speaking');
+  }
+  window.speechSynthesis.speak(u);
+}
+
 function hasContent(arr) {
   return Array.isArray(arr) && arr.filter(i => i && i.label).length > 0;
 }
@@ -136,13 +291,13 @@ function renderGrid() {
   const grid = document.getElementById("weeksGrid");
   grid.innerHTML = WEEKS.map((w, i) => {
     const icons = [
-      hasContent(w.pdfs)      ? '<span class="ricon ricon-pdf"  title="PDF">P</span>'  : '',
-      hasContent(w.audios)    ? '<span class="ricon ricon-audio" title="Áudio">A</span>' : '',
-      hasContent(w.exercises) ? '<span class="ricon ricon-exercise" title="Exercícios">E</span>' : '',
-      hasContent(w.links)     ? '<span class="ricon ricon-link"  title="Links">L</span>' : '',
-      hasContent(w.videos)    ? '<span class="ricon ricon-video" title="Vídeos">V</span>' : '',
+      hasContent(w.pdfs)        ? '<span class="ricon ricon-pdf"      title="PDF">P</span>'        : '',
+      hasContent(w.audios)      ? '<span class="ricon ricon-audio"    title="Áudio">A</span>'      : '',
+      hasContent(w.exercises)   ? '<span class="ricon ricon-exercise" title="Exercícios">E</span>' : '',
+      hasContent(w.links)       ? '<span class="ricon ricon-link"     title="Links">L</span>'      : '',
+      hasContent(w.videos)      ? '<span class="ricon ricon-video"    title="Vídeos">V</span>'     : '',
+      (w.vocabulary||[]).length ? '<span class="ricon ricon-vocab"    title="Vocabulário">W</span>': '',
     ].join('');
-
     return `
       <article class="week-card" onclick="openModal(${i})" tabindex="0"
                onkeydown="if(event.key==='Enter')openModal(${i})">
@@ -166,45 +321,22 @@ function openModal(index) {
   document.getElementById("modalWeekLabel").textContent = `Semana ${w.number}`;
   document.getElementById("modalTitle").textContent     = w.title;
   document.getElementById("modalFocus").textContent     = w.focus || '';
-
   document.getElementById("modalBody").innerHTML = [
     renderPdfs(w.pdfs),
     renderExercises(w.exercises),
     renderAudios(w.audios),
     renderLinks(w.links),
     renderVideos(w.videos),
+    renderNotes(w.notes),
     renderVocabulary(w.vocabulary),
     `<div class="yas-tip"><strong>Dica da YV</strong>Pratique todos os dias um pouco. Consistência é o que te leva à fluência. ✦</div>`
   ].join('');
-
   document.getElementById("overlay").classList.add("open");
   document.body.style.overflow = 'hidden';
 }
 
-
-function renderVocabulary(vocabulary) {
-  const items = (vocabulary || []).filter(v => v.word);
-  if (!items.length) return '';
-  return `
-    <div class="resource-section">
-      <h3 class="res-title">Vocabulário</h3>
-      <div class="vocab-grid">
-        ${items.map((v, i) => `
-          <div class="vocab-card" onclick="this.classList.toggle('flipped')" tabindex="0"
-               onkeydown="if(event.key==='Enter')this.classList.toggle('flipped')">
-            <div class="vocab-front">
-              <span class="vocab-word">${v.word}</span>
-              <span class="vocab-hint">toque para ver</span>
-            </div>
-            <div class="vocab-back">
-              <span class="vocab-translation">${v.translation}</span>
-            </div>
-          </div>`).join('')}
-      </div>
-    </div>`;
-}
-
 function closeModal() {
+  window.speechSynthesis && window.speechSynthesis.cancel();
   document.getElementById("overlay").classList.remove("open");
   document.body.style.overflow = '';
 }
@@ -212,104 +344,159 @@ function closeModal() {
 function renderPdfs(pdfs) {
   const items = (pdfs || []).filter(p => p.label);
   if (!items.length) return '';
-  return `
-    <div class="resource-section">
-      <h3 class="res-title">PDFs</h3>
-      <div class="res-list">
-        ${items.map(p => `
-          <div class="res-item">
-            <span class="res-item-label">${p.label}</span>
-            <div class="res-actions">
-              <a href="${p.url}" target="_blank" class="btn-open">Abrir ↗</a>
-              <a href="${p.url}" download class="btn-download">Baixar</a>
-            </div>
-          </div>`).join('')}
-      </div>
-    </div>`;
+  return `<div class="resource-section">
+    <h3 class="res-title">PDFs</h3>
+    <div class="res-list">
+      ${items.map(p => `
+        <div class="res-item">
+          <span class="res-item-label">${p.label}</span>
+          <div class="res-actions">
+            <a href="${p.url}" target="_blank" class="btn-open">Abrir ↗</a>
+            <a href="${p.url}" download class="btn-download">Baixar</a>
+          </div>
+        </div>`).join('')}
+    </div>
+  </div>`;
 }
 
 function renderExercises(exercises) {
   const items = (exercises || []).filter(Boolean);
   if (!items.length) return '';
-  return `
-    <div class="resource-section">
-      <h3 class="res-title">Exercícios</h3>
-      <ul class="exercise-list">
-        ${items.map(e => `<li>${e}</li>`).join('')}
-      </ul>
-    </div>`;
+  return `<div class="resource-section">
+    <h3 class="res-title">Exercícios</h3>
+    <ul class="exercise-list">
+      ${items.map(e => `<li>${e}</li>`).join('')}
+    </ul>
+  </div>`;
 }
 
 function renderAudios(audios) {
   const items = (audios || []).filter(a => a.label);
   if (!items.length) return '';
-  return `
-    <div class="resource-section">
-      <h3 class="res-title">Áudios</h3>
-      <div class="res-list">
-        ${items.map(a => a.url
-          ? `<div class="res-item audio-item">
-               <span class="res-item-label">${a.label}</span>
-               <audio controls preload="none"><source src="${a.url}"></audio>
-             </div>`
-          : `<div class="res-item">
-               <span class="res-item-label">${a.label}</span>
-               <span class="via-whatsapp">via WhatsApp</span>
-             </div>`
-        ).join('')}
-      </div>
-    </div>`;
+  return `<div class="resource-section">
+    <h3 class="res-title">Áudios</h3>
+    <div class="res-list">
+      ${items.map(a => a.url
+        ? `<div class="res-item audio-item">
+             <span class="res-item-label">${a.label}</span>
+             <audio controls preload="none"><source src="${a.url}"></audio>
+           </div>`
+        : `<div class="res-item">
+             <span class="res-item-label">${a.label}</span>
+             <span class="via-whatsapp">via WhatsApp</span>
+           </div>`
+      ).join('')}
+    </div>
+  </div>`;
 }
 
 function renderLinks(links) {
   const items = (links || []).filter(l => l.label);
   if (!items.length) return '';
-  return `
-    <div class="resource-section">
-      <h3 class="res-title">Links</h3>
-      <div class="res-list">
-        ${items.map(l => `
-          <div class="res-item">
-            <span class="res-item-label">${l.label}</span>
-            <div class="res-actions">
-              <a href="${l.url}" target="_blank" class="btn-open">Abrir ↗</a>
-            </div>
-          </div>`).join('')}
-      </div>
-    </div>`;
+  return `<div class="resource-section">
+    <h3 class="res-title">Links</h3>
+    <div class="res-list">
+      ${items.map(l => `
+        <div class="res-item">
+          <span class="res-item-label">${l.label}</span>
+          <div class="res-actions">
+            <a href="${l.url}" target="_blank" class="btn-open">Abrir ↗</a>
+          </div>
+        </div>`).join('')}
+    </div>
+  </div>`;
 }
 
 function renderVideos(videos) {
   const items = (videos || []).filter(v => v.label);
   if (!items.length) return '';
-  return `
-    <div class="resource-section">
-      <h3 class="res-title">Vídeos</h3>
-      <div class="res-list">
-        ${items.map(v => `
-          <div class="res-item">
-            <span class="res-item-label">${v.label}</span>
-            <div class="res-actions">
-              <a href="${v.url}" target="_blank" class="btn-open">Assistir ↗</a>
-            </div>
-          </div>`).join('')}
-      </div>
-    </div>`;
+  return `<div class="resource-section">
+    <h3 class="res-title">Vídeos</h3>
+    <div class="res-list">
+      ${items.map(v => `
+        <div class="res-item">
+          <span class="res-item-label">${v.label}</span>
+          <div class="res-actions">
+            <a href="${v.url}" target="_blank" class="btn-open">Assistir ↗</a>
+          </div>
+        </div>`).join('')}
+    </div>
+  </div>`;
 }
 
-// Fechar clicando fora
+function renderNotes(notes) {
+  const items = (notes || []).filter(Boolean);
+  if (!items.length) return '';
+  return `<div class="resource-section">
+    <h3 class="res-title">Notas da Aula</h3>
+    <ul class="notes-list">
+      ${items.map(n => `<li>${n}</li>`).join('')}
+    </ul>
+  </div>`;
+}
+
+function renderVocabulary(vocabulary) {
+  const items = (vocabulary || []).filter(v => v.word);
+  if (!items.length) return '';
+  return `<div class="resource-section">
+    <h3 class="res-title">Vocabulário</h3>
+    <div class="vocab-grid">
+      ${items.map(v => `
+        <div class="vocab-card" tabindex="0"
+             onclick="this.classList.toggle('flipped')"
+             onkeydown="if(event.key==='Enter')this.classList.toggle('flipped')">
+          <div class="vocab-front">
+            <button class="vocab-speak-btn"
+              onclick="event.stopPropagation(); speakWord('${v.word.replace(/'/g,"\\'")}', this)"
+              title="Ouvir pronúncia">🔊</button>
+            <div class="vocab-front-inner">
+              <span class="vocab-word">${v.word}</span>
+              ${v.phonetic ? `<span class="vocab-phonetic">${v.phonetic}</span>` : ''}
+            </div>
+            <span class="vocab-hint">toque para ver</span>
+          </div>
+          <div class="vocab-back">
+            <span class="vocab-translation">${v.translation}</span>
+          </div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function renderGlossary() {
+  const section = document.getElementById("glossarySection");
+  if (!section) return;
+  const all = [];
+  WEEKS.forEach(w => {
+    (w.vocabulary || []).filter(v => v.word).forEach(v => {
+      all.push({ ...v, week: w.number });
+    });
+  });
+  if (!all.length) {
+    section.innerHTML = '<p class="glossary-empty">O glossário vai aparecer aqui conforme as semanas forem avançando. ✦</p>';
+    return;
+  }
+  section.innerHTML = all.map(v => `
+    <div class="glossary-row">
+      <span class="glos-word">${v.word}</span>
+      <span class="glos-trans">
+        ${v.translation}
+        ${v.phonetic ? `<span class="glos-phonetic">${v.phonetic}</span>` : ''}
+      </span>
+      <button class="glos-speak" onclick="speakWord('${v.word.replace(/'/g,"\\'")}', this)" title="Ouvir">🔊</button>
+      <span class="glos-week-badge">Sem. ${v.week}</span>
+    </div>`).join('');
+}
+
 document.getElementById("overlay").addEventListener("click", function(e) {
   if (e.target === this) closeModal();
 });
-
-// Fechar com Esc
 document.addEventListener("keydown", e => {
   if (e.key === "Escape") closeModal();
 });
 
-// Swipe down para fechar no mobile
 let touchStartY = 0;
-document.querySelector(".modal") && document.addEventListener("touchstart", e => {
+document.addEventListener("touchstart", e => {
   touchStartY = e.touches[0].clientY;
 }, { passive: true });
 document.addEventListener("touchmove", e => {
@@ -320,27 +507,3 @@ document.addEventListener("touchmove", e => {
 
 renderGrid();
 renderGlossary();
-
-function renderGlossary() {
-  const section = document.getElementById("glossarySection");
-  if (!section) return;
-
-  const all = [];
-  WEEKS.forEach(w => {
-    (w.vocabulary || []).filter(v => v.word).forEach(v => {
-      all.push({ ...v, week: w.number, weekTitle: w.title });
-    });
-  });
-
-  if (!all.length) {
-    section.innerHTML = '<p class="glossary-empty">O glossário vai aparecer aqui conforme as semanas forem avançando. ✦</p>';
-    return;
-  }
-
-  section.innerHTML = all.map(v => `
-    <div class="glossary-row">
-      <span class="glos-word">${v.word}</span>
-      <span class="glos-trans">${v.translation}</span>
-      <span class="glos-week-badge">Sem. ${v.week}</span>
-    </div>`).join('');
-}
