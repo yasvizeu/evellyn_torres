@@ -2,7 +2,7 @@
 // ✏️ DAILY CONTENT — atualize aqui sempre que quiser
 // ============================================================
 
-const PLAN = "Fluency"; // ✏️ Troque para "Fluency" para liberar o conteúdo
+const PLAN = "Foundation"; // ✏️ Troque para "Fluency" para liberar o conteúdo
 
 const DAILY = {
   date: "30 de abril, 2026",   // ✏️ Data de hoje
@@ -247,6 +247,75 @@ const WEEKS = [
     vocabulary: []
   }
 
+
+  ,{
+    number: 3,
+    title: "Review + Can/Can't",
+    focus: "Revisar To Be e Do/Does na prática e aprender a usar Can e Can't para falar o que você consegue fazer.",
+
+    pdfs: [],
+
+    exercises: [],
+
+    audios: [
+      { label: "Pronúncia — enviado pelo WhatsApp", url: "" }
+    ],
+
+    links: [],
+    videos: [],
+
+    notes: [
+      "DO / DOES → usados para perguntas e negativas com verbos de ação",
+      "DO → I, You, We, They | DOES → He, She, It",
+      "Pergunta: Does your cousin drive a car? / Do you have a mug?",
+      "CAN = poder / conseguir → I can dance. She can speak English.",
+      "CAN'T = não poder / não conseguir → I can't drive. He can't see.",
+      "SPEAK = falar | SEE = ver | WATCH = assistir | DANCE = dançar",
+    ],
+
+    vocabulary: [
+      { word: "can",      translation: "poder / conseguir",     phonetic: "/kæn/" },
+      { word: "can't",    translation: "não poder / não conseguir", phonetic: "/kɑːnt/" },
+      { word: "speak",    translation: "falar",                 phonetic: "/spiːk/" },
+      { word: "see",      translation: "ver",                   phonetic: "/siː/" },
+      { word: "watch",    translation: "assistir",              phonetic: "/wɒtʃ/" },
+      { word: "drive",    translation: "dirigir",               phonetic: "/draɪv/" },
+      { word: "dance",    translation: "dançar",                phonetic: "/dæns/" },
+    ],
+
+    classwork: [
+      {
+        title: "Parte 2 — Tradução (Português → Inglês)",
+        instruction: "Use as palavras da sua lista para traduzir as frases abaixo.",
+        items: [
+          { question: "Você tem uma caneca?",              answer: "Do you have a mug?" },
+          { question: "A cerveja está aqui?",              answer: "Is the beer here?" },
+          { question: "Ele gosta de salada, mas eu quero cerveja.", answer: "He likes salad but I want beer." },
+          { question: "Como está a relação?",              answer: "How is the relationship?" },
+          { question: "Hoje é um ótimo dia.",              answer: "Today is a great day." },
+        ]
+      },
+      {
+        title: "Parte 3 — Transformação (Afirmativa → Interrogativa)",
+        instruction: "Transforme a frase positiva em uma pergunta.",
+        items: [
+          { question: "That pencil is great.",         answer: "Is that pencil great?" },
+          { question: "Your cousin drives a car.",     answer: "Does your cousin drive a car?" },
+          { question: "This hurts today.",             answer: "Does this hurt today?" },
+        ]
+      },
+      {
+        title: "Parte 4 — Preencha com o Vocabulário Correto",
+        instruction: "Complete as frases usando as palavras lógicas da lista.",
+        items: [
+          { question: "I drink ___ before the weekend, but I drink ___ after.", answer: "I drink coke before the weekend, but I drink water after." },
+          { question: "___ you know about that relationship?",                  answer: "Do you know about that relationship?" },
+          { question: "It is ___.",                                             answer: "It is great! (ou qualquer adjetivo positivo)" },
+        ]
+      }
+    ]
+  }
+
   // ============================================================
   // ✏️ PARA ADICIONAR UMA NOVA SEMANA:
   // ,{
@@ -328,6 +397,7 @@ function openModal(index) {
     renderLinks(w.links),
     renderVideos(w.videos),
     renderNotes(w.notes),
+    renderClasswork(w.classwork),
     renderVocabulary(w.vocabulary),
     `<div class="yas-tip"><strong>Dica da YV</strong>Pratique todos os dias um pouco. Consistência é o que te leva à fluência. ✦</div>`
   ].join('');
@@ -461,6 +531,35 @@ function renderVocabulary(vocabulary) {
         </div>`).join('')}
     </div>
   </div>`;
+}
+
+
+function renderClasswork(classwork) {
+  const sections = (classwork || []).filter(s => s.title);
+  if (!sections.length) return '';
+  return sections.map(section => `
+    <div class="resource-section">
+      <h3 class="res-title">${section.title}</h3>
+      <p class="classwork-instruction">${section.instruction}</p>
+      <div class="classwork-list">
+        ${section.items.map((item, i) => `
+          <div class="classwork-item" id="cw-${section.title.replace(/\s/g,'')}-${i}">
+            <p class="classwork-q"><strong>${i + 1}.</strong> ${item.question}</p>
+            <button class="classwork-reveal-btn"
+              onclick="revealAnswer(this, '${item.answer.replace(/'/g, "\'")}')">
+              Ver resposta
+            </button>
+            <p class="classwork-answer" style="display:none">${item.answer}</p>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function revealAnswer(btn, answer) {
+  const item = btn.parentElement;
+  const answerEl = item.querySelector('.classwork-answer');
+  answerEl.style.display = 'block';
+  btn.style.display = 'none';
 }
 
 function renderGlossary() {
