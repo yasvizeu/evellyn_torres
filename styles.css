@@ -303,19 +303,20 @@ main {
 }
 .modal-close {
   position: absolute;
-  top: 16px; right: 18px;
-  background: rgba(255,255,255,.12);
-  border: 1px solid rgba(255,255,255,.2);
-  color: rgba(255,255,255,.8);
-  width: 34px; height: 34px;
+  top: 14px; right: 14px;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  color: #fff;
+  width: 36px; height: 36px;
   border-radius: 50%;
   font-size: .9rem;
   cursor: pointer;
   display: grid; place-items: center;
-  z-index: 10;
-  transition: background .15s, color .15s;
+  z-index: 20;
+  transition: background .15s;
+  flex-shrink: 0;
 }
-.modal-close:hover { background: rgba(255,255,255,.22); color: #fff; }
+.modal-close:hover { background: rgba(255,255,255,.28); }
 
 .modal-aside {
   background:
@@ -330,7 +331,7 @@ main {
 /* mobile: aside compacta — esconde foco e coração */
 @media (max-width: 639px) {
   .modal-aside {
-    padding: 48px 24px 18px;
+    padding: 52px 24px 18px;
     flex-direction: row;
     align-items: center;
     gap: 16px;
@@ -340,7 +341,15 @@ main {
   .aside-focus,
   .aside-heart { display: none; }
   .aside-week  { margin-bottom: 4px; }
-  .aside-title { font-size: 1.4rem; }
+  .aside-title { font-size: 1.3rem; }
+  .modal-close {
+    top: 12px;
+    right: 12px;
+    background: rgba(255,255,255,.2);
+    width: 36px;
+    height: 36px;
+    z-index: 30;
+  }
 }
 @media (min-width: 640px) { .modal-aside { width: 260px; padding: 64px 32px 44px; } }
 
