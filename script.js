@@ -493,19 +493,29 @@ function buildGlossaryHTML() {
     });
   });
   if (!all.length) return '<p class="glossary-empty">O glossario vai aparecer aqui conforme as semanas forem avancando. ✦</p>';
+
+  // Store words in a lookup to avoid inline quote issues
+  window._glossWords = window._glossWords || [];
+  window._glossWords = [];
   var html = "";
-  all.forEach(function(v) {
-    var safeWord = v.word.replace(/'/g, "\'");
+  all.forEach(function(v, i) {
+    window._glossWords[i] = v.word;
     html += '<div class="glossary-row">'
       + '<span class="glos-word">' + v.word + '</span>'
       + '<span class="glos-trans">' + v.translation
       + (v.phonetic ? ' <span class="glos-phonetic">' + v.phonetic + '</span>' : '')
       + '</span>'
-      + '<button class="glos-speak" onclick="speakWord(\'' + "' + safeWord + '" + '\',this)" title="Ouvir">🔊</button>'
+      + '<button class="glos-speak" onclick="speakGloss(' + i + ',this)" title="Ouvir">🔊</button>'
       + '<span class="glos-week-badge">Sem. ' + v.week + '</span>'
       + '</div>';
   });
   return html;
+}
+
+function speakGloss(i, btn) {
+  if (window._glossWords && window._glossWords[i]) {
+    speakWord(window._glossWords[i], btn);
+  }
 }
 
 var glossaryOpen = false;
