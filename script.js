@@ -3,7 +3,7 @@
 // ============================================================
 
 // ✏️ Troque o plano no index.html em: <body data-plan="Foundation">
-var PLAN = document.body.getAttribute("data-plan") || "Foundation";
+var PLAN = document.body.getAttribute("data-plan") || "Fluency";
 
 const DAILY = {
   date: "30 de abril, 2026",
