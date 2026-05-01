@@ -895,3 +895,159 @@ main {
   padding: 7px 12px;
   line-height: 1.5;
 }
+
+/* ── GLOSSARY BUTTON ── */
+.glossary-btn-wrap {
+  max-width: 860px;
+  margin: 32px auto 0;
+  padding: 0 4px;
+}
+
+.glossary-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 28px 26px;
+  background: var(--amber);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: transform .22s ease, box-shadow .22s ease;
+  box-shadow: 0 6px 28px rgba(200,136,58,.3), 0 2px 6px rgba(200,136,58,.15);
+  clip-path: polygon(
+    0% 4px, 6px 0%, 14px 5px, 22px 1px, 30px 6px, 40px 0%,
+    50px 4px, 60px 0%, 70px 5px, 82px 1px, 94px 4px, 106px 0%,
+    118px 5px, 130px 1px, 142px 4px, 154px 0%, 166px 5px, 180px 2px,
+    194px 5px, 208px 0%, 222px 4px, 240px 1px, 260px 5px, 280px 0%,
+    300px 4px, 320px 1px, 340px 5px, 360px 0%, 380px 3px, 400px 0%,
+    420px 4px, 440px 1px, 460px 5px, 480px 0%, 500px 4px,
+    calc(100% - 20px) 2px, calc(100% - 10px) 0%, calc(100% - 4px) 4px, 100% 2px,
+    100% calc(100% - 5px), calc(100% - 8px) 100%, calc(100% - 18px) calc(100% - 4px),
+    calc(100% - 30px) 100%, calc(100% - 42px) calc(100% - 5px),
+    calc(100% - 56px) 100%, calc(100% - 70px) calc(100% - 3px),
+    calc(100% - 86px) 100%, calc(100% - 102px) calc(100% - 5px),
+    calc(100% - 120px) 100%, calc(100% - 140px) calc(100% - 4px),
+    calc(100% - 160px) 100%, calc(100% - 182px) calc(100% - 5px),
+    calc(100% - 206px) 100%, calc(100% - 230px) calc(100% - 3px),
+    calc(100% - 256px) 100%, calc(100% - 284px) calc(100% - 5px),
+    320px 100%, 290px calc(100% - 4px), 260px 100%, 230px calc(100% - 5px),
+    200px 100%, 170px calc(100% - 3px), 140px 100%, 110px calc(100% - 5px),
+    80px 100%, 50px calc(100% - 4px), 20px 100%, 8px calc(100% - 5px),
+    0% calc(100% - 3px)
+  );
+}
+
+.glossary-btn:hover {
+  transform: translateY(-2px) rotate(.2deg);
+  box-shadow: 0 10px 36px rgba(200,136,58,.4);
+}
+
+.glossary-btn-left { display: flex; flex-direction: column; gap: 5px; }
+
+.glossary-tag {
+  font-size: .68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .22em;
+  color: rgba(255,255,255,.75);
+  display: block;
+}
+
+.glossary-btn-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  font-style: italic;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.glossary-btn-sub {
+  font-size: .74rem;
+  color: rgba(255,255,255,.65);
+  font-weight: 300;
+}
+
+.glossary-btn-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.glossary-icon { font-size: 1.5rem; line-height: 1; }
+
+.glossary-btn-cta {
+  font-size: .72rem;
+  font-weight: 600;
+  color: rgba(255,255,255,.9);
+  white-space: nowrap;
+}
+
+/* ── FLOATING BUTTONS ── */
+.floating-btns {
+  position: fixed;
+  bottom: 24px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 50;
+}
+
+.float-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,.18);
+  transition: transform .2s, box-shadow .2s;
+  text-decoration: none;
+}
+
+.float-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.22);
+}
+
+.float-wa {
+  background: #25D366;
+  color: #fff;
+}
+
+.float-top {
+  background: var(--plum);
+  color: var(--amber-soft);
+}
+
+/* ── DAILY ACTION BUTTONS ── */
+.daily-action-btns {
+  margin-top: 28px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.daily-back-btn {
+  padding: 10px 20px;
+  background: var(--plum-light);
+  border: 1.5px solid var(--plum-mid);
+  border-radius: 8px;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--plum);
+  cursor: pointer;
+  transition: background .15s, color .15s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.daily-back-btn:hover {
+  background: var(--plum);
+  color: #fff;
+}
