@@ -485,55 +485,49 @@ function renderVocabulary(vocabulary) {
   return html + '</div></div>';
 }
 
-function renderGlossary() {
-  var section = document.getElementById("glossarySection");
-  if (!section) return;
+function buildGlossaryHTML() {
   var all = [];
   WEEKS.forEach(function(w) {
     (w.vocabulary || []).filter(function(v) { return v.word; }).forEach(function(v) {
       all.push({ word: v.word, translation: v.translation, phonetic: v.phonetic, week: w.number });
     });
   });
-  if (!all.length) {
-    section.innerHTML = '<p class="glossary-empty">O glossario vai aparecer aqui conforme as semanas forem avancando. ✦</p>';
-    return;
-  }
+  if (!all.length) return '<p class="glossary-empty">O glossario vai aparecer aqui conforme as semanas forem avancando. ✦</p>';
   var html = "";
   all.forEach(function(v) {
-    var safeWord = v.word.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+    var safeWord = v.word.replace(/'/g, "\'");
     html += '<div class="glossary-row">'
       + '<span class="glos-word">' + v.word + '</span>'
       + '<span class="glos-trans">' + v.translation
       + (v.phonetic ? ' <span class="glos-phonetic">' + v.phonetic + '</span>' : '')
       + '</span>'
-      + '<button class="glos-speak" onclick="speakWord(\'' + safeWord + '\',this)" title="Ouvir">🔊</button>'
+      + '<button class="glos-speak" onclick="speakWord(\'' + "' + safeWord + '" + '\',this)" title="Ouvir">🔊</button>'
       + '<span class="glos-week-badge">Sem. ' + v.week + '</span>'
       + '</div>';
   });
-  section.innerHTML = html;
+  return html;
 }
 
-// ============================================================
-// EVENT LISTENERS
-// ============================================================
+var glossaryOpen = false;
 
-document.getElementById("overlay").addEventListener("click", function(e) {
-  if (e.target === this) closeModal();
-});
-
-document.addEventListener("keydown", function(e) {
-  if (e.key === "Escape") closeModal();
-});
-
-var touchStartY = 0;
-document.addEventListener("touchstart", function(e) {
-  touchStartY = e.touches[0].clientY;
-}, { passive: true });
-document.addEventListener("touchmove", function(e) {
-  if (document.getElementById("overlay").classList.contains("open")) {
-    if (e.touches[0].clientY - touchStartY > 100) closeModal();
+function toggleGlossary() {
+  var section = document.getElementById("glossarySection");
+  var cta     = document.getElementById("glossaryBtnCta");
+  if (!section) return;
+  glossaryOpen = !glossaryOpen;
+  if (glossaryOpen) {
+    if (!section.innerHTML.trim()) section.innerHTML = buildGlossaryHTML();
+    section.style.display = "block";
+    if (cta) cta.textContent = "Fechar ↑";
+    setTimeout(function() { section.scrollIntoView({ behavior: "smooth", block: "start" }); }, 80);
+  } else {
+    section.style.display = "none";
+    if (cta) cta.textContent = "Ver palavras →";
   }
-}, { passive: true });
+}
 
+function renderGlossary() {
+  // glossary now loads on demand via toggleGlossary
+}
 renderGrid();
 renderGlossary();
