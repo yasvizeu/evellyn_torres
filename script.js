@@ -208,6 +208,76 @@ const WEEKS = [
       { word: "drive", translation: "dirigir",                  phonetic: "/draiv/" },
       { word: "dance", translation: "dancar",                   phonetic: "/dans/" }
     ]
+  },
+
+  {
+    number: 4,
+    title: "Ask, Say, Talk, Speak, Tell",
+    focus: "Diferenciar os verbos de comunicacao e usar vocabulario do dia a dia com confianca.",
+    pdfs: [],
+    exercises: [
+      "Escreva 2 frases com cada verbo: ask, say, talk, speak, tell",
+      "Complete: I need to ___ to you. / She ___ she loves your smile. / He ___ about the child.",
+      "Traduza: Eu quero perguntar algo. / Ela sorri. / Voce e unico. / Preciso te contar algo."
+    ],
+    audios: [ { label: "Pronuncia — enviado pelo WhatsApp", url: "" } ],
+    links: [], videos: [],
+    notes: [
+      "ASK = perguntar — I ask, You ask, He asks, She asks",
+      "SAY = dizer — I say, He says, She says | She says she loves your smile.",
+      "TALK = conversar / falar (informal) — I need to talk to you.",
+      "SPEAK = falar (mais formal) — I need to speak with you.",
+      "TELL = contar — I need to tell you something.",
+      "SMILE = sorriso / sorrir — I smile, He smiles | She says she loves your smile.",
+      "LEARN = aprender | ASK = perguntar | CONCERN = preocupacao | WORRY = preocupacao",
+      "I am worried. / Under = sob / embaixo",
+      "KIND = gentil / tipo | You are one of a kind. = Voce e unico(a).",
+      "COFFEE = cafe | COUGH = tosse | CANDY = doce | DEEP = profundo / fundo",
+      "He talks about the child. / It talks about something deeper than just child."
+    ],
+    classwork: [
+      {
+        title: "Atividade 1 — Qual verbo usar?",
+        instruction: "Complete com ask, say, talk, speak ou tell.",
+        items: [
+          { q: "I need to ___ to you. (conversa informal)",           a: "I need to talk to you." },
+          { q: "I need to ___ with you. (mais formal)",               a: "I need to speak with you." },
+          { q: "I need to ___ you something. (contar)",               a: "I need to tell you something." },
+          { q: "She ___ she loves your smile. (dizer)",               a: "She says she loves your smile." },
+          { q: "Do you have a girlfriend? — she ___. (perguntar)",    a: "Do you have a girlfriend? — she asks." },
+          { q: "He ___ about the child. (falar sobre)",               a: "He talks about the child." }
+        ]
+      },
+      {
+        title: "Atividade 2 — Vocabulario no contexto",
+        instruction: "Complete as frases com as palavras da aula.",
+        items: [
+          { q: "You are one of a ___. (unico)",                       a: "You are one of a kind." },
+          { q: "She ___ when she sees him. (sorrir)",                 a: "She smiles when she sees him." },
+          { q: "I am ___ about you. (preocupado)",                    a: "I am worried about you." },
+          { q: "It talks about something ___ than just child. (profundo)", a: "It talks about something deeper than just child." },
+          { q: "I want to ___ something. (perguntar)",                a: "I want to ask something." }
+        ]
+      }
+    ],
+    vocabulary: [
+      { word: "ask",          translation: "perguntar",                  phonetic: "/ask/" },
+      { word: "say",          translation: "dizer",                      phonetic: "/sei/" },
+      { word: "talk",         translation: "conversar / falar",          phonetic: "/tok/" },
+      { word: "speak",        translation: "falar — mais formal",        phonetic: "/spik/" },
+      { word: "tell",         translation: "contar",                     phonetic: "/tel/" },
+      { word: "smile",        translation: "sorriso / sorrir",           phonetic: "/smail/" },
+      { word: "learn",        translation: "aprender",                   phonetic: "/lern/" },
+      { word: "kind",         translation: "gentil / tipo",              phonetic: "/kaind/" },
+      { word: "one of a kind",translation: "unico / sem igual",          phonetic: "/wan ov e kaind/" },
+      { word: "concern",      translation: "preocupacao",                phonetic: "/konSERN/" },
+      { word: "worried",      translation: "preocupado(a)",              phonetic: "/WArrid/" },
+      { word: "deep",         translation: "profundo / fundo",           phonetic: "/dip/" },
+      { word: "coffee",       translation: "cafe",                       phonetic: "/KOfi/" },
+      { word: "cough",        translation: "tosse",                      phonetic: "/kof/" },
+      { word: "candy",        translation: "doce / bala",                phonetic: "/KANdi/" },
+      { word: "under",        translation: "sob / embaixo",              phonetic: "/ANder/" }
+    ]
   }
 ];
 
